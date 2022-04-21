@@ -15,7 +15,22 @@ module.exports = {
       '2xl': '1536px',
     },
     colors: ({ colors }) => ({
-      brand: '#1e293b',
+      // brand: '#065f46',
+      // 'brand-dark': '#064e3b',
+      // 'brand-light': '#a7f3d0',
+
+      brand: '#1e40af',
+      'brand-dark': '#1e3a8a',
+      'brand-light': '#bfdbfe',
+
+      // brand: '#6b21a8',
+      // 'brand-dark': '#581c87',
+      // 'brand-light': '#e9d5ff',
+
+        // brand: '#854d0e',
+        // 'brand-dark': '#713f12',
+        // 'brand-light': '#fef08a',
+
       inherit: colors.inherit,
       current: colors.current,
       transparent: colors.transparent,
@@ -353,6 +368,7 @@ module.exports = {
       DEFAULT: '1',
     },
     fontFamily: {
+      inter: 'Inter',
       sans: [
         'ui-sans-serif',
         'system-ui',
@@ -956,5 +972,7 @@ module.exports = {
     'active',
     'disabled',
   ],
-  plugins: [],
+  plugins: [
+      require('@tailwindcss/forms'),
+  ],
 }

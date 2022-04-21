@@ -18,5 +18,7 @@
 
     if($selected === '') $selected = 'appointment_lists';
 
+    $routes = [];
+
 @endphp
 <x-navigation.navbar :routes="$routes" :selected="$selected"/>

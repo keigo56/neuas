@@ -8,7 +8,7 @@
           rel="stylesheet">
     <title>NEU Appointment System</title>
 </head>
-<body class="antialiased">
+<body class="antialiased pb-96">
     {{ $slot }}
 <script defer
         src="https://unpkg.com/alpinejs@3.10.1/dist/cdn.min.js"></script>
