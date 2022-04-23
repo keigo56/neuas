@@ -47,27 +47,35 @@
 
                     {{--    FORM    --}}
                     <div class="mt-12">
-                        <div class="flex flex-col space-y-5">
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                                <x-forms.input name="email" type="email" id="email" placeholder="johndoe@example.com"/>
-                            </div>
-                            <div>
-                                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
-                                <x-forms.input name="password" type="password" id="password" placeholder="******"/>
-                            </div>
-                            <div>
-                                <div class="flex">
-                                    <x-forms.checkbox name="remember" id="remember" class="mr-2"/>
-                                    <label for="remember" class="block text-xs font-medium text-gray-700 mb-2">Remember Information</label>
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf
+                            <div class="flex flex-col space-y-5">
+                                <div>
+                                    <x-forms.label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</x-forms.label>
+                                    <x-forms.input name="email" type="email" id="email" placeholder="johndoe@example.com"/>
+                                </div>
+                                <div>
+                                    <x-forms.label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</x-forms.label>
+                                    <x-forms.input name="password" type="password" id="password" placeholder="********"/>
+                                </div>
+                                <div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <x-forms.checkbox name="remember" id="remember" class="mr-2"/>
+                                            <x-forms.label for="remember" class="mb-0 block text-xs font-medium text-gray-700">Remember Information</x-forms.label>
+                                        </div>
+                                        <div>
+                                            <a href="{{ route('password.request') }}" class="text-brand text-xs font-semibold hover:text-brand-dark hover:underline ">Forgot Password?</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <x-elements.button type="submit" class="w-full text-center py-2.5">
+                                        Login
+                                    </x-elements.button>
                                 </div>
                             </div>
-                            <div>
-                                <x-elements.button class="w-full text-center py-2.5">
-                                    Login
-                                </x-elements.button>
-                            </div>
-                        </div>
+                        </form>
                     </div>
 
                     <p class="text-xs text-center text-zinc-400 mt-12">2022 NEU, All rights Reserved</p>
