@@ -36,3 +36,5 @@ Route::get('/student/new-appointment-2', function () {
 Route::get('/student/new-appointment-3', function () {
     return view('students.new-appointment-3');
 })->name('student.new-appointment-3');
+
+require __DIR__.'/auth.php';
