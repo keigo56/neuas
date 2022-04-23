@@ -52,7 +52,7 @@
                             <div class="flex flex-col space-y-5">
                                 <div>
                                     <x-forms.label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</x-forms.label>
-                                    <x-forms.input name="email" type="email" id="email" placeholder="johndoe@example.com"/>
+                                    <x-forms.input name="email" type="email" id="email" placeholder="johndoe@example.com" :value="old('email')"/>
                                 </div>
                                 <div>
                                     <x-forms.label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</x-forms.label>
