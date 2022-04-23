@@ -62,24 +62,36 @@
                     </svg>
                 </button>
 
-                <x-elements.dropdown>
+                <x-elements.dropdown class="font-inter">
                     <x-slot name="button">
                         <button
                             @click="open = !open"
-                            type="button" class="bg-brand flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brand focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                            type="button" class="flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brand focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                             <span class="sr-only">Open user menu</span>
-                            <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                            <img class="h-8 w-8 rounded-full" src="{{ Auth::user()->getAttribute('avatar') }}" alt="">
                         </button>
                     </x-slot>
                     <x-slot name="dropdown">
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" class="block px-4 py-2 hover:bg-gray-100 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">
-                                Sign out
-                            </a>
-                        </form>
+                        <div class="min-w-[16rem]">
+                            <div class="flex items-center px-4 py-4 border-b">
+                                <div class="mr-4">
+                                    <img class="h-10 w-10 rounded-md" src="{{ Auth::user()->getAttribute('avatar') }}" alt="">
+                                </div>
+                                <div class="truncate">
+                                    <h1 class="text-md font-semibold truncate">{{ Auth::user()->getAttribute('name') }}</h1>
+                                    <p class="text-xs text-gray-500 truncate">{{ Auth::user()->getAttribute('email') }}</p>
+                                    <span class="text-[0.7rem] text-green-600 truncate px-2 py-0.5 rounded-full bg-green-200 -mt-2">{{ ucwords(Auth::user()->roles->first()->name)  }}</span>
+                                </div>
+                            </div>
 
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">My Profile</a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" class="block px-4 py-2 hover:bg-gray-100 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">
+                                    Sign out
+                                </a>
+                            </form>
+                        </div>
                     </x-slot>
                 </x-elements.dropdown>
             </div>
