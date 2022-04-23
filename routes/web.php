@@ -48,9 +48,10 @@ Route::middleware(['auth'])->group(function(){
     });
 
     Route::middleware(['role:registrar'])->group(function(){
-        Route::get('/registrar', function () {
-            return view('registrars.index');
-        })->name('registrar.index');
+        Route::get('/registrar', [\App\Http\Controllers\RegistrarController::class, 'dashboard'])->name('registrar.dashboard');
+        Route::get('/registrar/appointments', [\App\Http\Controllers\RegistrarController::class, 'appointments'])->name('registrar.appointments');
+        Route::get('/registrar/users', [\App\Http\Controllers\RegistrarController::class, 'users'])->name('registrar.users');
+        Route::get('/registrar/settings', [\App\Http\Controllers\RegistrarController::class, 'settings'])->name('registrar.settings');
     });
 
     Route::middleware(['role:guard'])->group(function(){

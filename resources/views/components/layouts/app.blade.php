@@ -8,7 +8,7 @@
           rel="stylesheet">
     <title>{{ $title }}</title>
 </head>
-<body>
+<body class="box-border antialiased font-inter">
     {{ $slot }}
 <script defer src="https://unpkg.com/alpinejs@3.10.1/dist/cdn.min.js"></script>
 </body>

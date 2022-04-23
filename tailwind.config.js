@@ -21,7 +21,9 @@ module.exports = {
 
       brand: '#1e40af',
       'brand-dark': '#1e3a8a',
-      'brand-light': '#bfdbfe',
+      'brand-light': '#bfdbfe', //200
+      'brand-semi-light': '#dbeafe', //100
+      'brand-lightest': '#eff6ff', // 50
 
       // brand: '#6b21a8',
       // 'brand-dark': '#581c87',
