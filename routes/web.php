@@ -47,7 +47,7 @@ Route::middleware(['auth'])->group(function(){
 
     });
 
-    Route::middleware(['role:registrar'])->group(function(){
+    Route::middleware(['role:registrar', 'ensureRightDepartment'])->group(function(){
         Route::prefix('/{department:slug}/registrar')->group(function(){
             Route::get('/', [\App\Http\Controllers\RegistrarController::class, 'dashboard'])->name('registrar.dashboard');
             Route::get('/appointments', [\App\Http\Controllers\RegistrarController::class, 'appointments'])->name('registrar.appointments');

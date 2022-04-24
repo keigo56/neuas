@@ -26,7 +26,7 @@ class RouteServiceProvider extends ServiceProvider
             return redirect()->route('student.appointment-lists');
 
         }else if(Auth::user()->hasRole('registrar')) {
-            return redirect()->route('registrar.dashboard');
+            return redirect()->route('registrar.dashboard', Auth::user()->department);
 
         }else if(Auth::user()->hasRole('guard')){
             return redirect()->route('guard.index');
