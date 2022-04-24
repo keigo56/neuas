@@ -7,6 +7,8 @@ use Livewire\Component;
 
 class Create extends Component
 {
+
+    public string $department = '';
     public string $name = '';
     public string $email = '';
 
@@ -30,6 +32,7 @@ class Create extends Component
             'email' => $this->email,
             'name' => $this->name,
             'avatar' => 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=7F9CF5&background=EBF4FF',
+            'department_id' => $this->department
         ]);
 
         $user->assignRole('registrar');

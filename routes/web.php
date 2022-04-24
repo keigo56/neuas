@@ -48,10 +48,12 @@ Route::middleware(['auth'])->group(function(){
     });
 
     Route::middleware(['role:registrar'])->group(function(){
-        Route::get('/registrar', [\App\Http\Controllers\RegistrarController::class, 'dashboard'])->name('registrar.dashboard');
-        Route::get('/registrar/appointments', [\App\Http\Controllers\RegistrarController::class, 'appointments'])->name('registrar.appointments');
-        Route::get('/registrar/users', [\App\Http\Controllers\RegistrarController::class, 'users'])->name('registrar.users');
-        Route::get('/registrar/settings', [\App\Http\Controllers\RegistrarController::class, 'settings'])->name('registrar.settings');
+        Route::prefix('/{department:slug}/registrar')->group(function(){
+            Route::get('/', [\App\Http\Controllers\RegistrarController::class, 'dashboard'])->name('registrar.dashboard');
+            Route::get('/appointments', [\App\Http\Controllers\RegistrarController::class, 'appointments'])->name('registrar.appointments');
+            Route::get('/users', [\App\Http\Controllers\RegistrarController::class, 'users'])->name('registrar.users');
+            Route::get('/settings', [\App\Http\Controllers\RegistrarController::class, 'settings'])->name('registrar.settings');
+        });
     });
 
     Route::middleware(['role:guard'])->group(function(){

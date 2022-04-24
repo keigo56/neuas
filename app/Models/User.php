@@ -23,7 +23,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'avatar'
+        'avatar',
+        'department_id'
     ];
 
     /**
@@ -53,4 +54,9 @@ class User extends Authenticatable
         );
     }
 
+
+    public function department(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Department::class);
+    }
 }

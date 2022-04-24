@@ -1019,6 +1019,11 @@ select{
 .h-0{
   height: 0px;
 }
+.h-min{
+  height: -webkit-min-content;
+  height: -moz-min-content;
+  height: min-content;
+}
 .max-h-56{
   max-height: 14rem;
 }
@@ -1666,6 +1671,9 @@ select{
   font-size: 1.875rem;
   line-height: 2.25rem;
 }
+.text-\[0\.65rem\]{
+  font-size: 0.65rem;
+}
 .font-semibold{
   font-weight: 600;
 }
@@ -1677,6 +1685,9 @@ select{
 }
 .font-normal{
   font-weight: 400;
+}
+.font-light{
+  font-weight: 300;
 }
 .uppercase{
   text-transform: uppercase;

@@ -15,6 +15,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+
+        //COLLEGE REGISTRAR
         $registrar = User::create([
             'name' => 'Keigo Victor Fujita',
             'email' => 'keigofujita19@gmail.com',
@@ -22,6 +24,20 @@ class UserSeeder extends Seeder
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'avatar' => 'https://ui-avatars.com/api/?name=' . urlencode('Keigo Victor Fujita') . '&color=7F9CF5&background=EBF4FF',
             'remember_token' => \Str::random(10),
+            'department_id' => '1'
+        ]);
+
+        $registrar->assignRole('registrar');
+
+        //HIGH SCHOOL REGISTRAR
+        $registrar = User::create([
+            'name' => 'Keigo Victor Fujita',
+            'email' => 'keigovfujita@gmail.com',
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'avatar' => 'https://ui-avatars.com/api/?name=' . urlencode('Keigo Victor Fujita') . '&color=7F9CF5&background=EBF4FF',
+            'remember_token' => \Str::random(10),
+            'department_id' => '2'
         ]);
 
         $registrar->assignRole('registrar');

@@ -15,12 +15,16 @@ use JetBrains\PhpStorm\Pure;
 class UsersDatatable extends Datatable
 {
 
+    public string $department = '';
     public string $title = 'Users';
     public string $primaryKey = 'id';
 
     public function query(): Builder
     {
-        return User::query();
+        return User::query()
+            ->select(\DB::raw('departments.display_name as department_name'), 'users.*')
+            ->join('departments','departments.id','=', 'users.department_id')
+            ->where('departments.id', '=', $this->department);
     }
 
     public function columns(): array
@@ -46,7 +50,7 @@ class UsersDatatable extends Datatable
                 ->string(),
 
             Column::make()
-                ->field('department')
+                ->field('department_name')
                 ->title('Department')
                 ->sortable(true)
                 ->string(),
