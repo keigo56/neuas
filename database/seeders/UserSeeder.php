@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             'email' => 'keigofujita19@gmail.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'avatar' => 'https://ui-avatars.com/api/?name=' . urlencode('Keigo Victor Fujita') . '&color=7F9CF5&background=EBF4FF',
             'remember_token' => \Str::random(10),
         ]);
 
@@ -30,6 +31,7 @@ class UserSeeder extends Seeder
             'email' => 'rovincruz@gmail.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'avatar' => 'https://ui-avatars.com/api/?name=' . urlencode('Rovin Cruz') . '&color=7F9CF5&background=EBF4FF',
             'remember_token' => \Str::random(10),
         ]);
 
@@ -40,6 +42,7 @@ class UserSeeder extends Seeder
             'email' => 'princehopeibasco@gmail.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'avatar' => 'https://ui-avatars.com/api/?name=' . urlencode('Prince Hope Ibasco') . '&color=7F9CF5&background=EBF4FF',
             'remember_token' => \Str::random(10),
         ]);
 
