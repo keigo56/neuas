@@ -87,4 +87,9 @@ class UsersDatatable extends Datatable
     {
         return true;
     }
+
+    public function createRecord()
+    {
+        $this->dispatchBrowserEvent('toggle-user-add-modal');
+    }
 }

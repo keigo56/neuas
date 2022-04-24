@@ -117,10 +117,10 @@ trait WithBulkActions {
             })
             ->toArray();
 
-        dd( $this->getRowsQueryForBulkAction()
-            ->unless($this->selectAll, function ($query) {
-                $query->whereIn($this->primaryKey, $this->selectedIDS);
-            })->delete()->toSql());
+//        $this->getRowsQueryForBulkAction()
+//            ->unless($this->selectAll, function ($query) {
+//                $query->whereIn($this->primaryKey, $this->selectedIDS);
+//            })->delete();
 
         return $this->getRowsQueryForBulkAction()
             ->unless($this->selectAll, function ($query) {

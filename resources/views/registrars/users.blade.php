@@ -4,4 +4,5 @@
     <div class="p-8">
         <livewire:users-datatable/>
     </div>
+    <livewire:registrar.user.create/>
 </x-layouts.registrar>
