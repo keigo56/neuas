@@ -69,6 +69,9 @@ class UsersDatatable extends Datatable
     {
         $this->advancedTable()
              ->withoutFooter()
+            ->cannotExport()
+            ->cannotDelete()
+            ->withoutMoreOptions()
              ->withoutImport();
     }
 

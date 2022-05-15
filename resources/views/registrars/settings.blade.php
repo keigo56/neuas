@@ -3,6 +3,6 @@
     <x-slot name="title">Settings</x-slot>
 
     <div class="pt-12 pb-8 max-w-7xl mx-auto">
-        <livewire:registrar.settings.schedule-basic/>
+        <livewire:registrar.settings.schedule/>
     </div>
 </x-layouts.registrar>

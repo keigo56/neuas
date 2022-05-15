@@ -71,9 +71,9 @@
                                                    <x-forms.checkbox wire:model="time_schedules.{{ $time_schedule_am->id }}.available" id="time-{{ $time_schedule_am->id }}" class="mr-2"/>
                                                    <x-forms.label for="time-{{ $time_schedule_am->id }}" class="inline-block text-sm font-medium text-gray-700">{{ $time_schedule_am->time_from }} - {{ $time_schedule_am->time_to }}</x-forms.label>
                                                </div>
-                                               <div>
-                                                   <x-forms.input wire:model.lazy="time_schedules.{{ $time_schedule_am->id }}.slots" :disabled="$this->time_schedules[$time_schedule_am->id]['available'] === 0 || $this->time_schedules[$time_schedule_am->id]['available'] === false" type="number" name="schedule" class="w-20 px-1 py-1 text-left" value="10"/>
-                                               </div>
+{{--                                               <div>--}}
+{{--                                                   <x-forms.input wire:model.lazy="time_schedules.{{ $time_schedule_am->id }}.slots" :disabled="$this->time_schedules[$time_schedule_am->id]['available'] === 0 || $this->time_schedules[$time_schedule_am->id]['available'] === false" type="number" name="schedule" class="w-20 px-1 py-1 text-left" value="10"/>--}}
+{{--                                               </div>--}}
                                            </div>
                                        @endforeach
                                    </div>
@@ -86,9 +86,9 @@
                                                <x-forms.checkbox wire:model="time_schedules.{{ $time_schedule_pm->id }}.available" id="time-{{ $time_schedule_pm->id }}" class="mr-2" />
                                                <x-forms.label for="time-{{ $time_schedule_pm->id }}" class="inline-block text-sm font-medium text-gray-700">{{ $time_schedule_pm->time_from }} - {{ $time_schedule_pm->time_to }}</x-forms.label>
                                            </div>
-                                           <div>
-                                               <x-forms.input wire:model.lazy="time_schedules.{{ $time_schedule_pm->id }}.slots" :disabled="$this->time_schedules[$time_schedule_pm->id]['available'] === 0 || $this->time_schedules[$time_schedule_pm->id]['available'] === false" type="number" name="schedule" class="w-20 px-1 py-1 text-left" value="10"/>
-                                           </div>
+{{--                                           <div>--}}
+{{--                                               <x-forms.input wire:model.lazy="time_schedules.{{ $time_schedule_pm->id }}.slots" :disabled="$this->time_schedules[$time_schedule_pm->id]['available'] === 0 || $this->time_schedules[$time_schedule_pm->id]['available'] === false" type="number" name="schedule" class="w-20 px-1 py-1 text-left" value="10"/>--}}
+{{--                                           </div>--}}
                                        </div>
                                    @endforeach
                                </div>
@@ -105,37 +105,37 @@
                    </div>
                </div>
 
-                <div class="w-72">
-                    <div class="p-5">
-                        <h1 class="font-semibold text-md mb-4">Custom Dates</h1>
-                        <div class="mb-5">
-                            <p class="text-sm font-semibold">Nov 1, 2022</p>
-                            <p class="text-xs ">All Saints Day</p>
-                        </div>
+{{--                <div class="w-72">--}}
+{{--                    <div class="p-5">--}}
+{{--                        <h1 class="font-semibold text-md mb-4">Custom Dates</h1>--}}
+{{--                        <div class="mb-5">--}}
+{{--                            <p class="text-sm font-semibold">Nov 1, 2022</p>--}}
+{{--                            <p class="text-xs ">All Saints Day</p>--}}
+{{--                        </div>--}}
 
-                        <div class="mb-5">
-                            <p class="text-sm font-semibold">Nov 12, 2022 - Nov 13, 2022</p>
-                            <p class="text-xs ">Semester Break</p>
-                        </div>
+{{--                        <div class="mb-5">--}}
+{{--                            <p class="text-sm font-semibold">Nov 12, 2022 - Nov 13, 2022</p>--}}
+{{--                            <p class="text-xs ">Semester Break</p>--}}
+{{--                        </div>--}}
 
-                        <div class="mb-5">
-                            <p class="text-sm font-semibold">Dec 12, 2022 - Jan 05, 2023</p>
-                            <p class="text-xs ">Holiday Season</p>
-                        </div>
+{{--                        <div class="mb-5">--}}
+{{--                            <p class="text-sm font-semibold">Dec 12, 2022 - Jan 05, 2023</p>--}}
+{{--                            <p class="text-xs ">Holiday Season</p>--}}
+{{--                        </div>--}}
 
-                    </div>
-                </div>
+{{--                    </div>--}}
+{{--                </div>--}}
 
             </div>
         </div>
     </x-elements.card>
 
-    <x-elements.card>
-        <div class="p-5 bg-slate-50 border-b">
-            <h1 class="font-semibold">Time Schedule</h1>
-        </div>
-        <div class="p-5">
+{{--    <x-elements.card>--}}
+{{--        <div class="p-5 bg-slate-50 border-b">--}}
+{{--            <h1 class="font-semibold">Time Schedule</h1>--}}
+{{--        </div>--}}
+{{--        <div class="p-5">--}}
 
-        </div>
-    </x-elements.card>
+{{--        </div>--}}
+{{--    </x-elements.card>--}}
 </div>
