@@ -65,24 +65,26 @@
 
                         <div class="relative text-left" x-data="{ open: false }">
                             <div>
-                                <x-datatable.elements.button-menu
+                                @if($this->withMoreOptions)
+                                    <x-datatable.elements.button-menu
                                         class="px-3 py-1.5 border-gray-300 text-gray-700"
                                         aria-haspopup="true"
                                         x-on:click="open = true"
-                                >
-                                    <div class="flex justify-between items-center">
-                                        <span class="font-semibold text-xs">More Options</span>
-                                        <svg class="ml-2 h-3.5 w-3.5"
-                                             xmlns="http://www.w3.org/2000/svg"
-                                             viewBox="0 0 20 20"
-                                             fill="currentColor"
-                                             aria-hidden="true">
-                                            <path fill-rule="evenodd"
-                                                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                  clip-rule="evenodd"/>
-                                        </svg>
-                                    </div>
-                                </x-datatable.elements.button-menu>
+                                    >
+                                        <div class="flex justify-between items-center">
+                                            <span class="font-semibold text-xs">More Options</span>
+                                            <svg class="ml-2 h-3.5 w-3.5"
+                                                 xmlns="http://www.w3.org/2000/svg"
+                                                 viewBox="0 0 20 20"
+                                                 fill="currentColor"
+                                                 aria-hidden="true">
+                                                <path fill-rule="evenodd"
+                                                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                      clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
+                                    </x-datatable.elements.button-menu>
+                                @endif
                             </div>
 
                             <div class="origin-top-left absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
@@ -137,36 +139,40 @@
                                         </a>
                                     @endif
 
-                                    <a href="#"
-                                       class="text-gray-700 block px-4 py-1.5 text-xs hover:bg-gray-100 flex items-center justify-between"
-                                       role="menuitem"
-                                       tabindex="-1"
-                                       id="menu-item-column-export"
-                                    >
-                                        <div>
-                                            Exports
-                                        </div>
-                                        <div>
-                                            <x-datatable.icons.export class="w-4 h-4"/>
-                                        </div>
-                                    </a>
+                                    @if($this->canExport)
+                                        <a href="#"
+                                           class="text-gray-700 block px-4 py-1.5 text-xs hover:bg-gray-100 flex items-center justify-between"
+                                           role="menuitem"
+                                           tabindex="-1"
+                                           id="menu-item-column-export"
+                                        >
+                                            <div>
+                                                Exports
+                                            </div>
+                                            <div>
+                                                <x-datatable.icons.export class="w-4 h-4"/>
+                                            </div>
+                                        </a>
+                                    @endif
 
                                     <div class="border-b mt-2"></div>
                                     <div class="px-4 py-2 pb-2 text-xs font-semibold">View</div>
 
-                                    <a href="#"
-                                       class="text-gray-700 block px-4 py-1.5 text-xs hover:bg-gray-100 flex items-center justify-between"
-                                       role="menuitem"
-                                       tabindex="-1"
-                                       id="menu-item-column-export"
-                                    >
-                                        <div>
-                                            Trash
-                                        </div>
-                                        <div>
-                                            <x-datatable.icons.trash class="w-4 h-4"/>
-                                        </div>
-                                    </a>
+                                    @if($this->canDelete)
+                                        <a href="#"
+                                           class="text-gray-700 block px-4 py-1.5 text-xs hover:bg-gray-100 flex items-center justify-between"
+                                           role="menuitem"
+                                           tabindex="-1"
+                                           id="menu-item-column-export"
+                                        >
+                                            <div>
+                                                Trash
+                                            </div>
+                                            <div>
+                                                <x-datatable.icons.trash class="w-4 h-4"/>
+                                            </div>
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -177,93 +183,101 @@
                     <div class="flex justify-end">
                         <div class="flex items-center space-x-2">
                             @if(count($this->selectedIDS) > 0 || $this->selectAll)
-                                <x-datatable.elements.button-menu
-                                    class="px-3 py-1.5 border-gray-300 text-gray-700"
-                                    @click="$dispatch('toggle-export-modal')"
-                                >
-                                    <div class="flex items-center justify-center">
-                                        <span class="font-semibold text-xs">Export</span>
-                                        <x-datatable.icons.export class="ml-2 h-3.5 w-3.5"/>
-                                    </div>
-                                </x-datatable.elements.button-menu>
 
-                                <x-datatable.elements.button-menu
-                                    class="px-3 py-1.5 border-red-700 text-red-700"
-                                    @click="$dispatch('toggle-delete-modal')"
-                                >
-                                    <div class="flex items-center justify-center">
-                                        <span class="font-semibold text-xs">Delete</span>
-                                        <x-datatable.icons.trash class="ml-2 h-3.5 w-3.5"/>
-                                    </div>
-                                </x-datatable.elements.button-menu>
-
-                                <div class="relative text-left" x-data="{ open: false }">
-                                    <div>
-                                        <x-datatable.elements.button-menu
-                                            class="px-3 py-1.5 border-gray-300 text-gray-700"
-                                            x-on:click="open = true"
-                                        >
-                                            <div class="flex items-center justify-center">
-                                                <span class="font-semibold text-xs">More Actions</span>
-                                                <svg class="ml-2 h-3.5 w-3.5"
-                                                     xmlns="http://www.w3.org/2000/svg"
-                                                     viewBox="0 0 20 20"
-                                                     fill="currentColor"
-                                                     aria-hidden="true">
-                                                    <path fill-rule="evenodd"
-                                                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                          clip-rule="evenodd"/>
-                                                </svg>
-                                            </div>
-                                        </x-datatable.elements.button-menu>
-                                    </div>
-
-                                    <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
-                                         role="menu"
-                                         aria-orientation="vertical"
-                                         aria-labelledby="menu-button"
-                                         tabindex="-1"
-                                         x-show="open"
-                                         x-on:click.away="open = false"
-                                         x-transition:enter="transition ease-out duration-100"
-                                         x-transition:enter-start="transform opacity-0 scale-95"
-                                         x-transition:enter-end="transform opacity-100 scale-100"
-                                         x-transition:leave="transition ease-in duration-75"
-                                         x-transition:leave-start="transform opacity-100 scale-100"
-                                         x-transition:leave-end="transform opacity-0 scale-95"
+                                @if($this->canExport)
+                                    <x-datatable.elements.button-menu
+                                        class="px-3 py-1.5 border-gray-300 text-gray-700"
+                                        @click="$dispatch('toggle-export-modal')"
                                     >
-                                        <div class="py-1"
-                                             role="none">
-                                            <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                                            <a href="#"
-                                               class="text-gray-700 block px-4 py-1.5 text-xs hover:bg-gray-100 flex items-center justify-between"
-                                               role="menuitem"
-                                               tabindex="-1"
-                                               id="menu-item-0"
-                                            >
-                                                <div>
-                                                    Copy to Clipboard
-                                                </div>
-                                                <div>
-                                                    <x-datatable.icons.clipboard class="w-4 h-4"/>
-                                                </div>
-                                            </a>
-                                            <a href="#"
-                                               class="text-gray-700 block px-4 py-1.5 text-xs hover:bg-gray-100 flex items-center justify-between"
-                                               role="menuitem"
-                                               tabindex="-1"
-                                               id="menu-item-1"
-                                            >
-                                                <div>
-                                                    Mark as Completed
-                                                </div>
-                                                <div>
-                                                    <x-datatable.icons.check class="w-4 h-4"/>
-                                                </div>
-                                            </a>
+                                        <div class="flex items-center justify-center">
+                                            <span class="font-semibold text-xs">Export</span>
+                                            <x-datatable.icons.export class="ml-2 h-3.5 w-3.5"/>
                                         </div>
-                                    </div>
-                                </div>
+                                    </x-datatable.elements.button-menu>
+                                @endif
+
+                                @if($this->canDelete)
+                                    <x-datatable.elements.button-menu
+                                        class="px-3 py-1.5 border-red-700 text-red-700"
+                                        @click="$dispatch('toggle-delete-modal')"
+                                    >
+                                        <div class="flex items-center justify-center">
+                                            <span class="font-semibold text-xs">Delete</span>
+                                            <x-datatable.icons.trash class="ml-2 h-3.5 w-3.5"/>
+                                        </div>
+                                    </x-datatable.elements.button-menu>
+                                @endif
+
+                                @foreach($this->buttonActionItems() as $item_action)
+                                    <button
+                                        class="bg-white border border-b-2 active:border-b rounded shadow-sm text-sm font-medium px-3 py-1.5 border-gray-300 text-gray-700"
+                                        {!!  $item_action['action'] !!}
+                                    >
+                                        <div class="flex items-center justify-center">
+                                            <span class="font-semibold text-xs">{{ $item_action['title'] }}</span>
+                                            {!!  Blade::render('<x-datatable.icons.' . $item_action['icon'] . ' class="ml-2 h-3.5 w-3.5" />') !!}
+                                        </div>
+                                    </button>
+                                @endforeach
+
+                                @if(count($this->menuActionItems()) > 0)
+                                        <div class="relative text-left" x-data="{ open: false }">
+                                            <div>
+                                                <x-datatable.elements.button-menu
+                                                    class="px-3 py-1.5 border-gray-300 text-gray-700"
+                                                    x-on:click="open = true"
+                                                >
+                                                    <div class="flex items-center justify-center">
+                                                        <span class="font-semibold text-xs">More Actions</span>
+                                                        <svg class="ml-2 h-3.5 w-3.5"
+                                                             xmlns="http://www.w3.org/2000/svg"
+                                                             viewBox="0 0 20 20"
+                                                             fill="currentColor"
+                                                             aria-hidden="true">
+                                                            <path fill-rule="evenodd"
+                                                                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                                  clip-rule="evenodd"/>
+                                                        </svg>
+                                                    </div>
+                                                </x-datatable.elements.button-menu>
+                                            </div>
+                                            <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
+                                                 role="menu"
+                                                 aria-orientation="vertical"
+                                                 aria-labelledby="menu-button"
+                                                 tabindex="-1"
+                                                 x-show="open"
+                                                 x-on:click.away="open = false"
+                                                 x-transition:enter="transition ease-out duration-100"
+                                                 x-transition:enter-start="transform opacity-0 scale-95"
+                                                 x-transition:enter-end="transform opacity-100 scale-100"
+                                                 x-transition:leave="transition ease-in duration-75"
+                                                 x-transition:leave-start="transform opacity-100 scale-100"
+                                                 x-transition:leave-end="transform opacity-0 scale-95"
+                                            >
+                                                <div class="py-1"
+                                                     role="none">
+
+                                                    @foreach($this->menuActionItems() as $item_action)
+                                                        <a href="#"
+                                                           class="text-gray-700 block px-4 py-1.5 text-xs hover:bg-gray-100 flex items-center justify-between"
+                                                           role="menuitem"
+                                                           tabindex="-1"
+                                                            {{ $item_action['action'] }}
+                                                        >
+                                                            <div>
+                                                                {{ $item_action['title'] }}
+                                                            </div>
+                                                            <div>
+                                                                {!!  Blade::render('<x-datatable.icons.' . $item_action['icon'] . ' class="ml-2 h-3.5 w-3.5" />') !!}
+                                                            </div>
+                                                        </a>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                @endif
+
                             @endif
                         </div>
                     </div>

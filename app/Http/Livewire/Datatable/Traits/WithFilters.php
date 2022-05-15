@@ -51,6 +51,7 @@ trait WithFilters {
     {
         return [
             'field' => $this->getFirstColumn()->getField(),
+            'table' => $this->getFirstColumn()->getTable() === '' ? $this->primaryTable : $this->getFirstColumn()->getTable(),
             'condition' => 'equals',
             'value' => '',
             'logical_expression' => 'and',

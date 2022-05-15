@@ -9,7 +9,7 @@
     @livewireStyles
     <title>{{ $title }}</title>
 </head>
-<body class="box-border antialiased font-inter">
+<body class="box-border antialiased font-inter overflow-x-hidden">
     {{ $slot }}
 
 @livewireScripts

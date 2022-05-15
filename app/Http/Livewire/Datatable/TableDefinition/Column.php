@@ -17,6 +17,7 @@ class Column
     private bool $isSearchable = true;
     private bool $showSummation = false;
     private QueryBuilder|EloquentBuilder|null $enumQuery = null;
+    private string $table = '';
 
 
     public static function make(): Column
@@ -145,6 +146,19 @@ class Column
         $this->displayName = $title;
 
         return $this;
+    }
+
+    public function table(string $table): Column
+    {
+        $this->table = $table;
+
+        return $this;
+    }
+
+
+    public function getTable(): string
+    {
+        return $this->table;
     }
 
 

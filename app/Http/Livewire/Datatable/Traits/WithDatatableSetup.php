@@ -15,6 +15,10 @@ trait WithDatatableSetup {
     public bool $withItemActions = false;
     public bool $withFooter = false;
     public bool $withImport = false;
+    public bool $withMoreOptions = false;
+    public bool $canExport = false;
+    public bool $canDelete = false;
+
 
     public function isBaseTable(): bool
     {
@@ -165,6 +169,48 @@ trait WithDatatableSetup {
         return $this;
     }
 
+    public function withMoreOptions() : Datatable
+    {
+        $this->withMoreOptions = true;
+
+        return $this;
+    }
+
+    public function withoutMoreOptions() : Datatable
+    {
+        $this->withMoreOptions = false;
+
+        return $this;
+    }
+
+    public function canExport(): Datatable
+    {
+        $this->canExport = true;
+
+        return $this;
+    }
+
+    public function cannotExport(): Datatable
+    {
+        $this->canExport = false;
+
+        return $this;
+    }
+
+    public function canDelete(): Datatable
+    {
+        $this->canDelete = true;
+
+        return $this;
+    }
+
+    public function cannotDelete(): Datatable
+    {
+        $this->canDelete = false;
+
+        return $this;
+    }
+
     public function advancedTable(): Datatable
     {
         return $this
@@ -177,6 +223,10 @@ trait WithDatatableSetup {
             ->canCreateRecord()
             ->withItemActions()
             ->withFooter()
-            ->withImport();
+            ->withImport()
+            ->withMoreOptions()
+            ->canExport()
+            ->canDelete()
+            ;
     }
 }

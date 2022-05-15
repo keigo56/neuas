@@ -1,5 +1,34 @@
-<div x-data="{ open : false, items : [], selected: null, select(item){ this.selected = item; $refs.select.value = item.value } }"
-     x-init="$refs.select.querySelectorAll('option').forEach((el)=>{ items.push({ value: el.value, html: el.innerHTML }); console.log(el.innerHTML); if(el.hasAttribute('selected')){ selected = { value: el.value, html: el.innerHTML.toString() } } }); if(selected === null){ selected = items[0] }"
+<div
+    {{ $attributes->only('wire:key') }}
+    x-data="{ open : false, items : [], selected: null,
+            select(item){
+                this.selected = item;
+                $refs.select.value = item.value;
+
+                var event = new Event('change');
+                $refs.select.dispatchEvent(event);
+            }
+        }"
+     x-init="
+         $refs.select.querySelectorAll('option').forEach((el)=>{ items.push({ value: el.value, html: el.innerHTML });
+         if(el.hasAttribute('selected')){ selected = { value: el.value, html: el.innerHTML.toString() } } });
+         if(selected === null){
+            items.forEach((item) => {
+                if(item.value === $refs.select.value){
+                    selected = item
+                }
+            })
+         }
+    "
+
+    x-on:reload-items.window="
+        if($refs.select.getAttribute('name') === $event.detail.name){
+             items = [];
+             $refs.select.querySelectorAll('option').forEach((el)=>{ items.push({ value: el.value, html: el.innerHTML });
+             if(el.hasAttribute('selected')){ selected = { value: el.value, html: el.innerHTML.toString() } } });
+             select(items[0]);
+        }
+    "
 >
     <select x-ref="select"
             class="hidden"

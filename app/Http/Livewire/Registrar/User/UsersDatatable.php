@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Registrar\User;
 
-use App\Http\Livewire\Datatable\Contracts\InitializesDatatable;
 use App\Http\Livewire\Datatable\Datatable;
 use App\Http\Livewire\Datatable\TableDefinition\Column;
 use App\Http\Livewire\Datatable\TableDefinition\ItemAction;
-use App\Models\Employee;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use JetBrains\PhpStorm\Pure;
 

@@ -1,8 +1,8 @@
 <x-layouts.app>
-    <x-slot name="title">NEU Appointment System | Registrar</x-slot>
-    <div class="flex w-full bg-gray-100">
+    <x-slot name="title">NEU Appointment System | {{ $department->display_name }} Registrar</x-slot>
+    <div class="flex w-full overflow-x-hidden bg-gray-100">
         <x-registars.sidebar active="{{ $activeurl }}" :department="$department"/>
-        <div class="flex-1">
+        <div class="w-[calc(100%-18rem)]">
             <nav class="bg-white shadow" x-data="{ open : false }">
                 <div class="mx-auto px-2 sm:px-6 lg:px-8">
                     <div class="relative flex items-center justify-between h-16">

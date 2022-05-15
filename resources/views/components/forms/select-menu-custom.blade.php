@@ -1,12 +1,49 @@
-<div x-data="{ open : false, items : [], selected: null, select(item){ this.selected = item; $refs.select.value = item.value } }"
+@php
+
+    $class = 'relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand sm:text-sm';
+
+    if($errors->has($attributes->get('name'))){
+        $class = 'relative w-full bg-white border border-rose-700 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-rose-700 focus:border-rose-700 sm:text-sm';
+    }
+
+@endphp
+
+<div
+    {{ $attributes->only('wire:key') }}
+    x-data="{ open : false, items : [], selected: null,
+        select(item){
+            this.selected = item;
+            $refs.select.value = item.value
+            var event = new Event('change');
+            $refs.select.dispatchEvent(event);
+        }
+      }"
      x-init="
-     $refs.select.querySelectorAll('option').forEach((el) =>{
-         items.push({ value: el.value, text: el.innerHTML, disabled : el.hasAttribute('disabled') });
-         if(el.hasAttribute('selected')){ selected = { value: el.value, text: el.innerHTML, disabled : el.hasAttribute('disabled') } }
-     });
-     if(selected === null){ selected = items[0] }
-     $refs.customhtml.querySelectorAll('div[value]').forEach((el, index) => { items[index].html = el.innerHTML });
-"
+         $refs.select.querySelectorAll('option').forEach((el) =>{
+             items.push({ value: el.value, text: el.innerHTML, disabled : el.hasAttribute('disabled') });
+             if(el.hasAttribute('selected')){ selected = { value: el.value, text: el.innerHTML, disabled : el.hasAttribute('disabled') } }
+         });
+         if(selected === null){
+            items.forEach((item) => {
+                if(item.value === $refs.select.value){
+                    selected = item
+                }
+            })
+         }
+         $refs.customhtml.querySelectorAll('div[value]').forEach((el, index) => { items[index].html = el.innerHTML });
+    "
+    x-on:reload-items.window="
+
+          items = [];
+
+          $refs.select.querySelectorAll('option').forEach((el) =>{
+             items.push({ value: el.value, text: el.innerHTML, disabled : el.hasAttribute('disabled') });
+             if(el.hasAttribute('selected')){ selected = { value: el.value, text: el.innerHTML, disabled : el.hasAttribute('disabled') } }
+          });
+
+          select(items[0]);
+          $refs.customhtml.querySelectorAll('div[value]').forEach((el, index) => { items[index].html = el.innerHTML });
+    "
 >
     <select x-ref="select"
             class="hidden"
@@ -20,7 +57,7 @@
     <div class="mt-1 relative">
         <button @click="open = !open"
                 type="button"
-                class="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand sm:text-sm"
+                class="{{ $class }}"
                 aria-haspopup="listbox"
                 aria-expanded="true"
                 aria-labelledby="listbox-label">
@@ -80,3 +117,6 @@
         </ul>
     </div>
 </div>
+@if($errors->has($attributes->get('name')))
+    <p class="text-rose-700 text-xs mt-2 ml-2"> @error($attributes->get('name')) {{ $message }} @enderror</p>
+@endif

@@ -25,25 +25,8 @@ Route::middleware(['guest'])->group(function(){
 Route::middleware(['auth'])->group(function(){
     Route::middleware(['role:student'])->group(function(){
 
-        Route::get('/student/appointment-lists', function () {
-            return view('students.appointment-lists');
-        })->name('student.appointment-lists');
-
-        Route::get('/student/my-account', function () {
-            return view('students.my-account');
-        })->name('student.my-account');
-
-        Route::get('/student/new-appointment-1', function () {
-            return view('students.new-appointment');
-        })->name('student.new-appointment');
-
-        Route::get('/student/new-appointment-2', function () {
-            return view('students.new-appointment-2');
-        })->name('student.new-appointment-2');
-
-        Route::get('/student/new-appointment-3', function () {
-            return view('students.new-appointment-3');
-        })->name('student.new-appointment-3');
+        Route::get('/student/new-appointment', [\App\Http\Controllers\StudentController::class, 'create'])->name('student.new-appointment');
+        Route::get('/student/appointment-lists', [\App\Http\Controllers\StudentController::class, 'index'])->name('student.appointment-lists');
 
     });
 

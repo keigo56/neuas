@@ -58,6 +58,8 @@ trait WithBulkActions {
 
     public function deleteSelected()
     {
+        if($this->canDelete === false) return;
+
         if (count($this->selectedIDS) !== 0) {
             $this->getActionsQuery()->delete();
         }
@@ -73,6 +75,8 @@ trait WithBulkActions {
      */
     public function exportSelected()
     {
+        if($this->canExport === false) return;
+
         if (count($this->selectedIDS) !== 0) {
 
             Bus::batch([
@@ -97,6 +101,10 @@ trait WithBulkActions {
         if ($this->withFilters) {
             if ($this->isFiltered === true) {
                 foreach ($this->filters as $filter) {
+
+                    $column = $this->getColumn($filter['field']);
+                    $filter['field'] = ($column->getTable() === '' ? $this->primaryTable : $column->getTable()) . "." . $filter['field'];
+
                     $query = $this->filterColumn($query, $filter);
                 }
             }
@@ -111,21 +119,20 @@ trait WithBulkActions {
 
     public function getActionsQuery(): EloquentBuilder|DatabaseBuilder
     {
-        $heading_keys = collect($this->getHeadingKeys())
-            ->map(function ($key) {
-                return $key . " as " . $key;
-            })
-            ->toArray();
+        $table_name = $this->primaryTable;
 
-//        $this->getRowsQueryForBulkAction()
-//            ->unless($this->selectAll, function ($query) {
-//                $query->whereIn($this->primaryKey, $this->selectedIDS);
-//            })->delete();
+        if($this->getRowsQueryForBulkAction() instanceof EloquentBuilder){
+            $table_name = $this->getRowsQueryForBulkAction()->getModel()->getTable();
+        }
 
-        return $this->getRowsQueryForBulkAction()
-            ->unless($this->selectAll, function ($query) {
-                $query->whereIn($this->primaryKey, $this->selectedIDS);
+        $sub_query = $this->getRowsQueryForBulkAction()
+            ->unless($this->selectAll, function ($query) use($table_name) {
+                $query->whereIn(DB::raw("{$table_name}.{$this->primaryKey}"), $this->selectedIDS);
             });
+
+        return DB::table($table_name)
+            ->whereRaw("{$this->primaryKey} IN (SELECT sub.{$this->primaryKey} FROM ({$sub_query->toSql()}) as sub) ", $sub_query->getBindings())
+            ->select($this->primaryKey);
     }
 
     public function getHeadings(): array
@@ -147,4 +154,27 @@ trait WithBulkActions {
             ->values()
             ->toArray();
     }
+
+    public function buttonActionItems() : array
+    {
+        return [
+//            'copy_to_clipboard' => [
+//                'title' => 'Copy To Clipboard',
+//                'icon' => 'clipboard',
+//                'action' => 'wire:click="test"'
+//            ]
+        ];
+    }
+
+    public function menuActionItems() : array
+    {
+        return [
+//            'copy_to_clipboard' => [
+//                'title' => 'Copy To Clipboard',
+//                'icon' => 'clipboard',
+//                'action' => 'wire:click="test"'
+//            ]
+        ];
+    }
+
 }

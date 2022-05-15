@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Datatable;
 
 use App\Http\Livewire\Datatable\TableDefinition\Column;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 use JetBrains\PhpStorm\Pure;
 use App\Http\Livewire\Datatable\Traits\{WithBulkActions,
     WithDatatableSetup,
@@ -35,6 +36,7 @@ abstract class Datatable extends Component
     public int $perPage = 10;
     public string $search = '';
     public string $primaryKey = 'id';
+    public string $primaryTable = 'users';
 
 
     abstract function setup(): void;
@@ -155,6 +157,7 @@ abstract class Datatable extends Component
 
     public function getRowsData(): LengthAwarePaginator
     {
+//        dd($this->getRowsQuery()->paginate($this->perPage));
         return $this->getRowsQuery()->paginate($this->perPage)->onEachSide(1);
     }
 
