@@ -18,7 +18,7 @@
                 <h1 class="font-semibold">Day and Time availability</h1>
                 <div>
                     @if($isChanged)
-                        <button class="px-3 py-1.5 rounded-md text-sm font-medium inline-block bg-white text-gray-700 border hover:bg-gray-100 hover:text-brand focus:outline-none focus:ring-2 focus:ring-gray-200">Cancel</button>
+                        <button wire:click="cancel" class="px-3 py-1.5 rounded-md text-sm font-medium inline-block bg-white text-gray-700 border hover:bg-gray-100 hover:text-brand focus:outline-none focus:ring-2 focus:ring-gray-200">Cancel</button>
                         <x-elements.button wire:click="save" class="py-1.5 focus:ring-2">Save Changes</x-elements.button>
                     @endif
                 </div>

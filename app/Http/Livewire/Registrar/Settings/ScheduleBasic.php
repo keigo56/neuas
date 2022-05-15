@@ -6,7 +6,7 @@ use App\Models\TimeSchedule;
 use App\Models\WeekSchedule;
 use Livewire\Component;
 
-class Schedule extends Component
+class ScheduleBasic extends Component
 {
 
     public array $week_schedules = [];
@@ -76,7 +76,7 @@ class Schedule extends Component
             ->pm()
             ->get();
 
-        return view('livewire.registrar.settings.schedule',[
+        return view('livewire.registrar.settings.schedule-basic',[
             'time_schedules_am' => $time_schedules_am,
             'time_schedules_pm' => $time_schedules_pm
         ]);
@@ -90,16 +90,6 @@ class Schedule extends Component
                 ->where('id', $week_schedule['id'])
                 ->update([
                     'available' =>  $week_schedule['available']
-                ]);
-        }
-
-
-        foreach ($this->time_schedules as $time_schedule){
-            TimeSchedule::query()
-                ->where('id', $time_schedule['id'])
-                ->update([
-                    'available' => $time_schedule['available'],
-                    'slots' => $time_schedule['slots']
                 ]);
         }
 
