@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
@@ -31,9 +32,18 @@ class GoogleAuthController extends Controller
         $avatar = $user->getAvatar();
 
         // DOMAIN VALIDATION
-        if(!str($email)->contains('@gmail.com')){
-            session()->flash('google.auth.failed');
-            return redirect()->route('login');
+
+        $whitelistEmails = [
+            'keigofujita19@gmail.com', // COLLEGE
+            'keigovfujita@gmail.com', // HIGH SCHOOL
+            'lovejoy.ibasco@gmail.com' // STUDENT
+        ];
+
+        if(!str($email)->contains('@neu.edu.ph')){
+            if(!in_array($email, $whitelistEmails)){
+                session()->flash('google.auth.failed');
+                return redirect()->route('login');
+            }
         }
 
         $user_exists = User::query()->where('email', $email)->exists();
