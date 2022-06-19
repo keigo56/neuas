@@ -47,11 +47,16 @@
         <div class="h-full border-l p-8 flex-1 min-h-[36rem]">
 
             @if($current_step === 1)
-
                 <div wire:key="step_1">
                     <div class="flex items-end h-8 mb-10">
                         <h1 class="text-gray-900 font-semibold text-xl ">Application Form</h1>
                     </div>
+
+                    @error('student_document')
+                    <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+                        {{ $message }}
+                    </div>
+                    @enderror
                     <div class="flex flex-col space-y-8">
                         <div>
                             <label for="student_name" class="block text-sm font-medium text-gray-700 mb-2">Name</label>
@@ -69,11 +74,15 @@
 
                         <div>
                             <label for="document" class="block text-sm font-medium text-gray-700 mb-2">Document</label>
-                            <x-forms.select-menu wire:model="student_document" name="student_document">
-                                @foreach($documents as $document)
-                                    <option value="{{ $document->id }}">{{ $document->name }}</option>
-                                @endforeach
-                            </x-forms.select-menu>
+                            @foreach($documents as $document)
+                                <div>
+                                    <label class="text-sm">
+                                        <x-forms.checkbox wire:model="student_document" value="{{ $document->id }}" class="mr-2"></x-forms.checkbox>
+                                        <span>{{ $document->name }}</span>
+                                    </label>
+                                </div>
+
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -87,7 +96,7 @@
 
                         <div>
                             <label for="appointment_date" class="block text-sm font-medium text-gray-700 mb-2">Date</label>
-                            <x-forms.input wire:model="appointment_date" name="appointment_date" type="date" id="appointment_date" min="{{ now()->format('Y-m-d') }}" />
+                            <x-forms.input wire:model="appointment_date" name="appointment_date" type="date" id="appointment_date" min="{{ now()->addDay()->format('Y-m-d') }}" />
                         </div>
 
                         <div>
@@ -152,8 +161,12 @@
                             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ 'High School' }}</dd>
                         </div>
                         <div class="bg-gray-50 px-2 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
-                            <dt class="text-sm font-medium text-gray-500">Document</dt>
-                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ \App\Models\Document::find($this->student_document)->name }}</dd>
+                            <dt class="text-sm font-medium text-gray-500">Documents</dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                @foreach($this->student_document as $document_id)
+                                    <div>{{ \App\Models\Document::query()->where('id',$document_id)->first()->name }}</div>
+                                @endforeach
+                            </dd>
                         </div>
                         <div class="bg-gray-50 px-2 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
                             <dt class="text-sm font-medium text-gray-500">Date</dt>

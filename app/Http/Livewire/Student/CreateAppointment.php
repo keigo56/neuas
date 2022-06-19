@@ -17,7 +17,7 @@ class CreateAppointment extends Component
 
     public string $student_name = '';
     public string $student_department = '';
-    public string $student_document = '';
+    public array $student_document = [];
 
     public string $appointment_date = '';
     public string $appointment_time_id = 'no_sched';
@@ -48,11 +48,6 @@ class CreateAppointment extends Component
         $this->student_name = auth()->user()->name;
         $this->appointment_date = now()->format('Y-m-d');
         $this->student_department = Department::first()->id;
-
-        $this->student_document = Document::query()
-            ->where('department_id', $this->student_department)
-            ->first()
-            ->id;
     }
 
     public function updatedAppointmentDate()
@@ -62,9 +57,7 @@ class CreateAppointment extends Component
 
     public function updatedStudentDepartment()
     {
-        $this->dispatchBrowserEvent('reload-items', [
-            'name' => 'student_document'
-        ]);
+        $this->student_document = [];
     }
 
     public function updatedAppointmentTimeId()
@@ -93,7 +86,9 @@ class CreateAppointment extends Component
 
         $available_time_schedules = [];
 
-        if($week_schedule->available === 1){
+        $valid_date = Carbon::parse($this->appointment_date)->greaterThan(now());
+
+        if($week_schedule->available === 1 && $valid_date){
             $available_time_schedules = TimeSchedule::query()
                 ->where('week_schedule_id', $week_schedule->id)
                 ->where('available', 1)
@@ -123,6 +118,7 @@ class CreateAppointment extends Component
             ->where('department_id', $this->student_department)
             ->get();
 
+
         return view('livewire.student.create-appointment',[
             'departments' => $departments,
             'documents' => $documents,
@@ -140,7 +136,10 @@ class CreateAppointment extends Component
     public function next()
     {
         if($this->current_step === 1){
-            $this->validate(['student_name' => 'required|min:6']);
+            $this->validate([
+                'student_name' => 'required|min:6',
+                'student_document' => 'required|exists:documents,id',
+            ]);
         }else if($this->current_step === 2) {
             $this->validate(['appointment_time_id' => function ($attribute, $value, $fail) {
                 if (str($value)->contains('no_sched')) {
@@ -164,9 +163,8 @@ class CreateAppointment extends Component
 
         $time_schedule = TimeSchedule::query()->find($this->appointment_time_id);
 
-        Appointment::query()->create([
+        $appointment = Appointment::query()->create([
             'student_name' => $this->student_name,
-            'document_id' => $this->student_document,
             'department_id' => $this->student_department,
             'appointment_date' => $this->appointment_date,
             'appointment_code' => $this->appointment_time_code,
@@ -174,6 +172,8 @@ class CreateAppointment extends Component
             'time_to' =>  $time_schedule->time_to,
             'user_id' => auth()->user()->id
         ]);
+
+        $appointment->documents()->sync($this->student_document);
 
         $this->done = true;
         $this->dispatchBrowserEvent('close-confirm-appointment-modal');

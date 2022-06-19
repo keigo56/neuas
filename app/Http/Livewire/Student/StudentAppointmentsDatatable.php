@@ -24,11 +24,11 @@ class StudentAppointmentsDatatable extends Datatable
                 'appointments.status',
                 'appointments.notes',
                 DB::raw( 'CONCAT(appointments.time_from, " - ", appointments.time_to) as time_schedule'),
-                DB::raw('documents.name as document_name'),
+                DB::raw('appointments.id as document_name'),
                 DB::raw('departments.display_name as department_name')
             )
             ->join('users', 'users.id', '=', 'appointments.user_id')
-            ->join('documents', 'documents.id', '=', 'appointments.document_id')
+//            ->join('documents', 'documents.id', '=', 'appointments.document_id')
             ->join('departments', 'departments.id', '=', 'appointments.department_id')
             ->where('user_id', auth()->user()->id);
     }
@@ -59,7 +59,7 @@ class StudentAppointmentsDatatable extends Datatable
                 ->field('document_name')
                 ->title('Document Name')
                 ->sortable(true)
-                ->enum(),
+                ->string(),
 
             Column::make()
                 ->field('status')
@@ -80,6 +80,21 @@ class StudentAppointmentsDatatable extends Datatable
 
         if($column->getField() === 'avatar' && $value !== '') {
             return "<img class='h-8 w-8 rounded-full' src='$value' alt=''>";
+        }
+
+        if($column->getField() === 'document_name') {
+
+            $appointment_id = $value;
+            $document_names = [];
+
+            $documents = Appointment::where('id', $appointment_id)->first()->documents;
+
+            foreach ($documents as $document){
+                $document_names[] = $document->name;
+            }
+
+            $formatted = implode(', ', $document_names);
+            return "<span>$formatted</span>";
         }
 
         if($column->getField() === 'status') {

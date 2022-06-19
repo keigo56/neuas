@@ -22,4 +22,9 @@ class Appointment extends Model
     ];
 
     use HasFactory;
+
+    public function documents(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Document::class);
+    }
 }

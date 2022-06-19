@@ -19,9 +19,6 @@ return new class extends Migration
 
             $table->string('student_name');
 
-            $table->foreignId('document_id');
-            $table->foreign('document_id')->references('id')->on('documents');
-
             $table->foreignId('department_id');
             $table->foreign('department_id')->references('id')->on('departments');
 
