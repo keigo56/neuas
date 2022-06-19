@@ -4,9 +4,13 @@ namespace App\Http\Livewire\Registrar\Appointments;
 
 use App\Http\Livewire\Datatable\Datatable;
 use App\Http\Livewire\Datatable\TableDefinition\Column;
+use App\Jobs\SendAppointmentEmail;
+use App\Mail\AppointmentStatusMail;
 use App\Models\Appointment;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class AppointmentsDatatable extends Datatable
 {
@@ -172,8 +176,42 @@ class AppointmentsDatatable extends Datatable
             'notes' => $notes
         ]);
 
+        if($status !== 'finished') {
+            $this->sendEmails($status, $notes);
+        }
+
+
         $this->reset('selectAll', 'selectPage', 'selectedIDS');
         $this->dispatchBrowserEvent('delete-notification');
+    }
+
+    private function sendEmails($status, $notes)
+    {
+        $ids = $this->getActionsQuery()->get()->pluck('id')->toArray();
+        $appointments = $this->getRowsQuery()->whereIn('main.id', $ids)->get();
+
+        foreach ($appointments as $appointment){
+
+            $document_names = [];
+            $documents = Appointment::where('id', $appointment->id)->first()->documents;
+
+            foreach ($documents as $document){
+                $document_names[] = $document->name;
+            }
+
+            $data = [
+                'status' => $status,
+                'notes' => $notes,
+                'student_name' => $appointment->student_name,
+                'department_name' => $appointment->department_name,
+                'documents' => $document_names,
+                'appointment_date' => Carbon::parse($appointment->appointment_date)->format('M d, Y') . '  (' . Carbon::parse($appointment->appointment_date)->dayName. ')',
+                'time_schedule' => $appointment->time_schedule,
+            ];
+
+            $email = $appointment->email;
+            SendAppointmentEmail::dispatch($data, $email);
+        }
     }
 
 }

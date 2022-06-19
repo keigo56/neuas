@@ -4,6 +4,7 @@ module.exports = {
     "./resources/**/*.blade.php",
     "./resources/**/*.js",
     "./resources/**/*.vue",
+    // "./resources/views/emails/appointment.blade.php",
   ],
   presets: [],
   darkMode: 'media', // or 'class'

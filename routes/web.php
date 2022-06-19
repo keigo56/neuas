@@ -17,6 +17,10 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+//Route::get('/email', function () {
+//    return view('emails.appointment');
+//});
+
 Route::middleware(['guest'])->group(function(){
     Route::get('/google/auth/redirect', [\App\Http\Controllers\Auth\GoogleAuthController::class, 'redirect'])->name('google.auth');
     Route::get('/google/auth/callback', [\App\Http\Controllers\Auth\GoogleAuthController::class, 'callback'])->name('google.callback');

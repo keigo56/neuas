@@ -1,0 +1,7 @@
+/* ./resources/css/app.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&family=Inter&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

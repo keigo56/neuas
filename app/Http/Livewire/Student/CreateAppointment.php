@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\Student;
 
+use App\Mail\AppointmentStatusMail;
 use App\Models\Appointment;
 use App\Models\Department;
 use App\Models\Document;
 use App\Models\TimeSchedule;
 use App\Models\WeekSchedule;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class CreateAppointment extends Component
@@ -177,6 +179,5 @@ class CreateAppointment extends Component
 
         $this->done = true;
         $this->dispatchBrowserEvent('close-confirm-appointment-modal');
-
     }
 }
