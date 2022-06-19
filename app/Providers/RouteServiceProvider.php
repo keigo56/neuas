@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,21 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/home';
+
+    public static function redirectByRole(): \Illuminate\Http\RedirectResponse
+    {
+        if(Auth::user()->hasRole('student')){
+            return redirect()->route('student.appointment-lists');
+
+        }else if(Auth::user()->hasRole('registrar')) {
+            return redirect()->route('registrar.dashboard', Auth::user()->department);
+
+        }else if(Auth::user()->hasRole('guard')){
+            return redirect()->route('guard.index');
+        }
+
+        return redirect()->route('/');
+    }
 
     /**
      * Define your route model bindings, pattern filters, etc.

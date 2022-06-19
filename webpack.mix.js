@@ -11,7 +11,13 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
+mix.js('resources/js/app.js', 'public/js/app.js')
+    .js('resources/js/columnResize.js', 'public/js/columnResize.js')
     .postCss('resources/css/app.css', 'public/css', [
-        //
+        require("tailwindcss"),
     ]);
+
+
+// mix.postCss('resources/css/email.css', 'public/css', [
+//         require("tailwindcss"),
+//     ]);

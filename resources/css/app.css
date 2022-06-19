@@ -1,0 +1,120 @@
+/* ./resources/css/app.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&family=Inter&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+
+    .table{
+        @apply w-full min-w-max;
+    }
+
+    .table thead tr{
+        @apply border-b;
+    }
+
+    .table thead tr th{
+        @apply text-xs text-gray-500 font-medium text-left tracking-wider uppercase;
+    }
+
+    .table-sm thead tr th{
+        @apply text-xs text-gray-500 font-medium text-left tracking-wider uppercase;
+    }
+
+    .table thead tr th:first-of-type{
+        @apply md:pl-6 md:pr-3;
+    }
+
+    .table thead tr th:last-of-type{
+        @apply pl-3 pr-6;
+    }
+
+    .table tbody tr{
+        @apply border-b;
+    }
+
+    .table tbody tr td{
+        @apply px-3 py-3 text-sm text-gray-700;
+    }
+    .table-sm tbody tr td{
+        @apply px-2 py-2 text-xsm text-gray-700;
+    }
+
+    .table tbody tr td:first-of-type{
+        @apply md:pl-8 md:pr-3;
+    }
+
+    .table tbody tr .checkbox {
+        @apply md:pl-6 md:pr-3 !important;
+    }
+
+    .table tbody tr td:last-of-type{
+        @apply md:pl-3 md:pr-6;
+    }
+
+    .slider{
+        @apply w-full h-1.5 relative transition-all overflow-x-hidden ;
+    }
+
+    .line{
+        @apply w-full opacity-40 h-1.5 absolute top-0 left-0 bg-gray-700;
+    }
+
+    .sub-line{
+        @apply absolute top-0 left-0 bg-gray-800 h-1.5;
+    }
+
+    .inc{
+        animation: increase 2s infinite;
+    }
+    .dec{
+        animation: decrease 2s 0.5s infinite;
+    }
+
+    @keyframes increase {
+        from { left: -5%; width: 5%; }
+        to { left: 130%; width: 100%;}
+    }
+    @keyframes decrease {
+        from { left: -80%; width: 80%; }
+        to { left: 110%; width: 10%;}
+    }
+
+    .resizer {
+        /* Displayed at the right side of column */
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 5px;
+        cursor: col-resize;
+        user-select: none;
+    }
+
+    .resizer:hover,
+    .resizing {
+        @apply border-r-2 border-blue-300;
+    }
+
+    .custom-scrollbar *::-webkit-scrollbar {
+        @apply w-2 h-2;
+    }
+
+    /* Track */
+    .custom-scrollbar *::-webkit-scrollbar-track {
+        @apply bg-slate-200;
+    }
+
+    /* Handle */
+    .custom-scrollbar *::-webkit-scrollbar-thumb {
+        @apply bg-neutral-400 rounded-full w-2 h-2;
+    }
+
+    /* Handle on hover */
+    .custom-scrollbar *::-webkit-scrollbar-thumb:hover {
+        @apply bg-neutral-500;
+    }
+
+}
