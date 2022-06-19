@@ -538,13 +538,16 @@
     >
         <div class="flex">
             <div class="mr-4">
-                <x-datatable.icons.trash class="h-5 w-5 text-red-400"/>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+{{--                <x-datatable.icons.trash class="h-5 w-5 text-emerald-400"/>--}}
             </div>
             <div class="flex justify-between w-full">
                 <div class="text-left w-full mr-6">
-                    <h1 class=" font-semibold text-sm text-gray-700 mb-1">Successfully deleted!</h1>
+                    <h1 class=" font-semibold text-sm text-gray-700 mb-1">Updated Successfully!</h1>
                     <p class="text-sm text-gray-600">
-                        You can restore deleted items in trash.
+
                     </p>
                 </div>
                 <div>

@@ -27,6 +27,10 @@ class Dashboard extends Component
         $all_appointments_query = Appointment::query()
             ->where('department_id', $this->department);
 
+        $active_appointments_query = Appointment::query()
+            ->where('department_id', $this->department)
+            ->where('status', 'active');
+
         $pending_appointments_query = Appointment::query()
             ->where('department_id', $this->department)
             ->where('status', 'pending');
@@ -44,10 +48,12 @@ class Dashboard extends Component
         $pending_appointments_query = $this->dateRange($pending_appointments_query)->count();
         $done_appointments_query = $this->dateRange($done_appointments_query)->count();
         $cancelled_appointments_query = $this->dateRange($cancelled_appointments_query)->count();
+        $active_appointments_query = $this->dateRange($active_appointments_query)->count();
 
         return [
             'all' => $all_appointments_count,
             'pending' => $pending_appointments_query,
+            'active' => $active_appointments_query,
             'done' => $done_appointments_query,
             'cancelled' => $cancelled_appointments_query,
         ];

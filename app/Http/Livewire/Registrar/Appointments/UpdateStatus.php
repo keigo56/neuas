@@ -11,7 +11,7 @@ use Livewire\Component;
 
 class UpdateStatus extends Component
 {
-    public string $appointment_status = 'cancelled';
+    public string $appointment_status = 'active';
     public string $notes = '';
 
 

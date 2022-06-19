@@ -26,7 +26,7 @@
     </div>
 
     <div class="flex items-center flex-wrap mt-8">
-        <div class="sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-2 py-2 text-blue-500">
+        <div class="sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/5 px-2 py-2 text-blue-500">
             <x-elements.card>
                 <div class="p-5 flex justify-between">
                     <div>
@@ -41,7 +41,7 @@
                 </div>
             </x-elements.card>
         </div>
-        <div class="sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-2 py-2 text-yellow-500">
+        <div class="sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/5 px-2 py-2 text-yellow-500">
             <x-elements.card>
                 <div class="p-5 flex justify-between">
                     <div>
@@ -56,7 +56,22 @@
                 </div>
             </x-elements.card>
         </div>
-        <div class="sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-2 py-2 text-emerald-500">
+        <div class="sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/5 px-2 py-2 text-emerald-500">
+            <x-elements.card>
+                <div class="p-5 flex justify-between">
+                    <div>
+                        <h1 class="font-black text-2xl text-sm mb-2">{{ $data['active'] }}</h1>
+                        <p class="font-base text-sm text-gray-500">Total active appointments</p>
+                    </div>
+                    <div class="flex justify-between mb-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                </div>
+            </x-elements.card>
+        </div>
+        <div class="sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/5 px-2 py-2 text-emerald-500">
             <x-elements.card>
                 <div class="p-5 flex justify-between">
                     <div>
@@ -71,7 +86,7 @@
                 </div>
             </x-elements.card>
         </div>
-        <div class="sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-2 py-2 text-rose-500">
+        <div class="sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/5 px-2 py-2 text-rose-500">
             <x-elements.card>
                 <div class="p-5 flex justify-between">
                     <div>
