@@ -22,31 +22,31 @@
                 <div class="mt-3 bg-gray-100 p-4 rounded">
                     <h1 class="font-semibold text-center mb-3 border-b pb-3">Student Appointment Information</h1>
                     <div class="text-sm">
-                        <div class="flex justify-between mb-2">
+                        <div class="flex flex-col md:flex-row md:justify-between mb-5 md:mb-2">
                             <p class="font-semibold">Name</p>
                             <p>{{ $appointment->name }}</p>
                         </div>
-                        <div class="flex justify-between mb-2">
+                        <div class="flex flex-col md:flex-row md:justify-between mb-5 md:mb-2">
                             <p class="font-semibold">Email</p>
                             <p>{{ $appointment->email }}</p>
                         </div>
-                        <div class="flex justify-between mb-2">
+                        <div class="flex flex-col md:flex-row md:justify-between mb-5 md:mb-2">
                             <p class="font-semibold">Appointment Status</p>
                             <div>
                                 @if($appointment->status === 'pending')
-                                    <span class='ml-1 text-xs text-yellow-600 truncate px-2 py-0.5 rounded-full bg-yellow-200'>{{ $appointment->status }}</span>
+                                    <span class='md:ml-1 text-xs text-yellow-600 truncate px-2 py-0.5 rounded-full bg-yellow-200'>{{ $appointment->status }}</span>
                                 @elseif($appointment->status === 'cancelled')
-                                    <span class='ml-1 text-xs text-rose-600 truncate px-2 py-0.5 rounded-full bg-rose-200'>{{ $appointment->status }}</span>
+                                    <span class='md:ml-1 text-xs text-rose-600 truncate px-2 py-0.5 rounded-full bg-rose-200'>{{ $appointment->status }}</span>
                                 @else
-                                    <span class='ml-1 text-xs text-green-600 truncate px-2 py-0.5 rounded-full bg-green-200'>{{ $appointment->status }}</span>
+                                    <span class='md:ml-1 text-xs text-green-600 truncate px-2 py-0.5 rounded-full bg-green-200'>{{ $appointment->status }}</span>
                                 @endif
                             </div>
                         </div>
-                        <div class="flex justify-between mb-2">
+                        <div class="flex flex-col md:flex-row md:justify-between mb-5 md:mb-2">
                             <p class="font-semibold">Department</p>
                             <p>{{ $appointment->department_name }}</p>
                         </div>
-                        <div class="flex justify-between mb-2">
+                        <div class="flex flex-col md:flex-row md:justify-between mb-5 md:mb-2">
                             <p class="font-semibold">Appointment Schedule</p>
                             <p> {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('M d, Y') }} ( {{ $appointment->time_schedule }} )</p>
                         </div>

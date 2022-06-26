@@ -28,13 +28,13 @@ class SearchStudent extends Component
                 'appointments.status',
                 'appointments.notes',
                 DB::raw( 'CONCAT(appointments.time_from, " - ", appointments.time_to) as time_schedule'),
-                DB::raw('documents.name as document_name'),
+//                DB::raw('documents.name as document_name'),
                 DB::raw('departments.display_name as department_name'),
                 'users.name',
                 'users.email'
             )
             ->join('users', 'users.id', '=', 'appointments.user_id')
-            ->join('documents', 'documents.id', '=', 'appointments.document_id')
+//            ->join('documents', 'documents.id', '=', 'appointments.document_id')
             ->join('departments', 'departments.id', '=', 'appointments.department_id')
             ->where('appointments.appointment_date', now()->toDateString())
             ->where('users.email', $this->student_email)
