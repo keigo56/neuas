@@ -75,7 +75,7 @@
                               text-align: left;
                               margin: 0;
                         "
-                            class="text-md font-semibold text-left">Reason:</h1>
+                            class="text-md font-semibold text-left">Requirements:</h1>
                         <div class="text-sm text-zinc-500 mt-2"
                              style="
                              margin: 0;
@@ -147,6 +147,22 @@
                                         {{ $document }}
                                     </p>
                                 @endforeach
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p style="font-size: 0.875rem;
+                                    line-height: 1.25rem;
+                                    font-weight: 500;
+                                    color: #6B7280;
+                                    margin: 0;
+                                "
+                                   class="text-sm font-medium text-gray-500"
+                                >Other Documents</p>
+                            </td>
+                            <td style="text-align: right">
+                                <p  style="margin:0"
+                                    class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $other_documents }}</p>
                             </td>
                         </tr>
                         <tr>

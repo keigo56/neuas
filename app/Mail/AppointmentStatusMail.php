@@ -39,6 +39,7 @@ class AppointmentStatusMail extends Mailable
             ->with('documents', $this->data['documents'])
             ->with('appointment_date', $this->data['appointment_date'])
             ->with('time_schedule', $this->data['time_schedule'])
+            ->with('other_documents', $this->data['other_documents'])
             ;
     }
 }

@@ -84,6 +84,10 @@
 
                                 @endforeach
                             </div>
+                            <div>
+                                <label for="other_documents" class="block text-sm font-medium text-gray-700 mb-2">Additional Documents (optional)</label>
+                                <textarea class="block w-full shadow-sm sm:text-sm rounded-md focus:ring-brand focus:border-brand border-gray-300" wire:model.lazy="student_other_documents" name="other_documents" type="text" id="other_documents"></textarea>
+                            </div>
                         </div>
                     </div>
 

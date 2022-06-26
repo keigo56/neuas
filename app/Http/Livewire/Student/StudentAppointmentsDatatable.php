@@ -23,6 +23,7 @@ class StudentAppointmentsDatatable extends Datatable
                 'appointments.appointment_date',
                 'appointments.status',
                 'appointments.notes',
+                'appointments.other_documents',
                 DB::raw( 'CONCAT(appointments.time_from, " - ", appointments.time_to) as time_schedule'),
                 DB::raw('appointments.id as document_name'),
                 DB::raw('departments.display_name as department_name')
@@ -58,6 +59,12 @@ class StudentAppointmentsDatatable extends Datatable
             Column::make()
                 ->field('document_name')
                 ->title('Document Name')
+                ->sortable(true)
+                ->string(),
+
+            Column::make()
+                ->field('other_documents')
+                ->title('Other Documents')
                 ->sortable(true)
                 ->string(),
 
