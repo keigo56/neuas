@@ -20,6 +20,7 @@ class CreateAppointment extends Component
     public string $student_name = '';
     public string $student_department = '';
     public array $student_document = [];
+    public string $student_other_documents = '';
 
     public string $appointment_date = '';
     public string $appointment_time_id = 'no_sched';
@@ -172,7 +173,8 @@ class CreateAppointment extends Component
             'appointment_code' => $this->appointment_time_code,
             'time_from' => $time_schedule->time_from,
             'time_to' =>  $time_schedule->time_to,
-            'user_id' => auth()->user()->id
+            'user_id' => auth()->user()->id,
+            'other_documents' => $this->student_other_documents,
         ]);
 
         $appointment->documents()->sync($this->student_document);

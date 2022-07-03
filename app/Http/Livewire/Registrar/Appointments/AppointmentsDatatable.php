@@ -30,6 +30,7 @@ class AppointmentsDatatable extends Datatable
                 'appointments.appointment_date',
                 'appointments.status',
                 'appointments.notes',
+                'appointments.other_documents',
                 DB::raw( 'CONCAT(appointments.time_from, " - ", appointments.time_to) as time_schedule'),
                 DB::raw('appointments.id as document_name'),
                 DB::raw('departments.display_name as department_name')
@@ -84,6 +85,12 @@ class AppointmentsDatatable extends Datatable
                 ->title('Document Name')
                 ->sortable(true)
                 ->enum(),
+
+            Column::make()
+                ->field('other_documents')
+                ->title('Other Documents')
+                ->sortable(true)
+                ->string(),
 
             Column::make()
                 ->field('status')
@@ -204,6 +211,7 @@ class AppointmentsDatatable extends Datatable
                 'notes' => $notes,
                 'student_name' => $appointment->student_name,
                 'department_name' => $appointment->department_name,
+                'other_documents' => $appointment->other_documents,
                 'documents' => $document_names,
                 'appointment_date' => Carbon::parse($appointment->appointment_date)->format('M d, Y') . '  (' . Carbon::parse($appointment->appointment_date)->dayName. ')',
                 'time_schedule' => $appointment->time_schedule,

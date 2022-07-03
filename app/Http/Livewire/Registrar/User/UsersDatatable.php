@@ -70,19 +70,20 @@ class UsersDatatable extends Datatable
         $this->advancedTable()
              ->withoutFooter()
             ->cannotExport()
-            ->cannotDelete()
+//            ->cannotDelete()
             ->withoutMoreOptions()
-             ->withoutImport();
+             ->withoutImport()
+        ;
     }
 
     public function itemActions(): array
     {
         return [
-            $this->getViewItemAction()->authorize(true),
-            $this->getEditItemAction(),
-            $this->getCopyToClipboardItemAction(),
-            $this->getExportItemAction(),
-            $this->getDeleteItemAction()
+//            $this->getViewItemAction()->authorize(true),
+//            $this->getEditItemAction(),
+//            $this->getCopyToClipboardItemAction(),
+//            $this->getExportItemAction(),
+            $this->getDeleteItemAction()->authorize(true)
         ];
     }
 
@@ -95,5 +96,14 @@ class UsersDatatable extends Datatable
     public function createRecord()
     {
         $this->dispatchBrowserEvent('toggle-user-add-modal');
+    }
+
+    public function delete_row($rowId): void
+    {
+        if(auth()->user()->id === intval($rowId)) {
+            return;
+        }
+
+        User::where('id', $rowId)->delete();
     }
 }

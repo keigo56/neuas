@@ -18,7 +18,8 @@ class Appointment extends Model
         'appointment_code',
         'user_id',
         'status',
-        'notes'
+        'notes',
+        'other_documents'
     ];
 
     use HasFactory;
