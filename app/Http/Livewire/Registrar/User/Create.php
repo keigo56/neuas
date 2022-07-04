@@ -17,8 +17,8 @@ class Create extends Component
         return [
             'name' => 'required|min:6',
             'email' => ['required','email', 'unique:users,email' , function ($attribute, $value, $fail) {
-                if (!str($value)->contains('@gmail.com')) {
-                    $fail('Only email address under @gmail will be allowed.');
+                if (!str($value)->contains('@neu.edu.ph')) {
+                    $fail('Only email address under @neu.edu.ph will be allowed.');
                 }
             },],
         ];
