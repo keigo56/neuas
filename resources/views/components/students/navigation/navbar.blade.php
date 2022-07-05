@@ -69,8 +69,6 @@
                                     <span class="text-[0.7rem] text-green-600 truncate px-2 py-0.5 rounded-full bg-green-200 -mt-2">{{ ucwords(Auth::user()->roles->first()->name)  }}</span>
                                 </div>
                             </div>
-
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">My Profile</a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" class="block px-4 py-2 hover:bg-gray-100 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">

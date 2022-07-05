@@ -106,4 +106,22 @@ class UsersDatatable extends Datatable
 
         User::where('id', $rowId)->delete();
     }
+
+    public function deleteSelected()
+    {
+        if($this->canDelete === false) return;
+
+        if(collect($this->selectedIDS)->contains(auth()->user()->id)){
+            return;
+        }
+
+        if (count($this->selectedIDS) !== 0) {
+            $this->getActionsQuery()->delete();
+        }
+
+        $this->reset('selectAll', 'selectPage', 'selectedIDS');
+        $this->dispatchBrowserEvent('close-delete-modal');
+        $this->dispatchBrowserEvent('delete-notification');
+
+    }
 }
