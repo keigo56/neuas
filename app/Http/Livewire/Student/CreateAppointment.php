@@ -182,4 +182,10 @@ class CreateAppointment extends Component
         $this->done = true;
         $this->dispatchBrowserEvent('close-confirm-appointment-modal');
     }
+
+    public function getDepartmentName() : string
+    {
+        $department_name = \App\Models\Department::query()->where('id', $this->student_department)->first()->name ?? 'N/A';
+        return str($department_name)->replace('_', ' ')->title()->toString();
+    }
 }
