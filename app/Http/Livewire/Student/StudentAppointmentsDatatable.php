@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Student;
 
 use App\Http\Livewire\Datatable\Datatable;
 use App\Http\Livewire\Datatable\TableDefinition\Column;
+use App\Http\Livewire\Datatable\TableDefinition\ItemAction;
 use App\Models\Appointment;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
@@ -112,6 +113,8 @@ class StudentAppointmentsDatatable extends Datatable
             }else if($value === 'cancelled'){
                 $value = ucfirst($value);
                 return "<span class='ml-1 text-xs text-rose-600 truncate px-2 py-0.5 rounded-full bg-rose-200'>$value</span>";
+            }else if($value === 'on_process'){
+                return "<span class='ml-1 text-xs text-yellow-600 truncate px-2 py-0.5 rounded-full bg-yellow-200'>On Process</span>";
             }else{
                 $value = ucfirst($value);
                 return "<span class='ml-1 text-xs text-green-600 truncate px-2 py-0.5 rounded-full bg-green-200'>$value</span>";
@@ -127,8 +130,35 @@ class StudentAppointmentsDatatable extends Datatable
             ->canSortColumns()
             ->withFilters()
             ->canResizeColumns()
+            ->withItemActions()
 //            ->withBulkActions()
         ;
+    }
+
+    public function itemActions(): array
+    {
+        return [
+            ItemAction::make()
+                ->text('View Appointment')
+                ->method('view_row')
+                ->authorize(true),
+            ItemAction::make()
+                ->text('Update Proof of Payment')
+                ->method('update_proof_of_payment')
+                ->authorize(true),
+        ];
+    }
+
+    public function update_proof_of_payment($rowId)
+    {
+        $this->emit('update_proof_of_payment', $rowId);
+    }
+
+    public function view_row($rowId): void
+    {
+        abort_if($this->isUnauthorizedItemAction('view_row', $rowId),403, 'Cannot View Row');
+
+        $this->emit('view_appointment', $rowId);
     }
 
 

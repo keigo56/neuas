@@ -19,7 +19,9 @@ class Appointment extends Model
         'user_id',
         'status',
         'notes',
-        'other_documents'
+        'other_documents',
+        'address_type',
+        'address'
     ];
 
     use HasFactory;

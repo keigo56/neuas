@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Registrar\Appointments;
 
 use App\Http\Livewire\Datatable\Datatable;
 use App\Http\Livewire\Datatable\TableDefinition\Column;
+use App\Http\Livewire\Datatable\TableDefinition\ItemAction;
 use App\Jobs\SendAppointmentEmail;
 use App\Mail\AppointmentStatusMail;
 use App\Models\Appointment;
@@ -136,10 +137,12 @@ class AppointmentsDatatable extends Datatable
             }else if($value === 'cancelled'){
                 $value = ucfirst($value);
                 return "<span class='ml-1 text-xs text-rose-600 truncate px-2 py-0.5 rounded-full bg-rose-200'>$value</span>";
+            }else if($value === 'on_process'){
+                return "<span class='ml-1 text-xs text-yellow-600 truncate px-2 py-0.5 rounded-full bg-yellow-200'>On Process</span>";
             }else{
-                $value = ucfirst($value);
-                return "<span class='ml-1 text-xs text-green-600 truncate px-2 py-0.5 rounded-full bg-green-200'>$value</span>";
-            }
+                    $value = ucfirst($value);
+                    return "<span class='ml-1 text-xs text-green-600 truncate px-2 py-0.5 rounded-full bg-green-200'>$value</span>";
+                }
         }
 
         return $value;
@@ -151,12 +154,29 @@ class AppointmentsDatatable extends Datatable
              ->withoutImport()
              ->cannotCreateRecord()
              ->withoutFooter()
-             ->withoutItemActions()
              ->withoutMoreOptions()
              ->cannotDelete()
              ->cannotExport()
         ;
     }
+
+    public function itemActions(): array
+    {
+        return [
+            ItemAction::make()
+                ->text('View Appointment')
+                ->method('view_row')
+                ->authorize(true),
+        ];
+    }
+
+    public function view_row($rowId): void
+    {
+        abort_if($this->isUnauthorizedItemAction('view_row', $rowId),403, 'Cannot View Row');
+
+        $this->emit('view_appointment', $rowId);
+    }
+
 
     public function buttonActionItems(): array
     {
@@ -218,7 +238,9 @@ class AppointmentsDatatable extends Datatable
             ];
 
             $email = $appointment->email;
-            SendAppointmentEmail::dispatch($data, $email);
+
+            //SendAppointmentEmail::dispatch($data, $email);
+            Mail::to($email)->send(new AppointmentStatusMail($data));
         }
     }
 

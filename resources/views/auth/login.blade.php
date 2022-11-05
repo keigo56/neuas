@@ -83,6 +83,10 @@
                                         Login
                                     </x-elements.button>
                                 </div>
+
+                                <div class="mt-5 flex justify-center">
+                                    <p class="text-sm">Don't have an account? <a class="text-brand hover:underline" href="{{ route('register') }}">Sign up now</a></p>
+                                </div>
                             </div>
                         </form>
                     </div>

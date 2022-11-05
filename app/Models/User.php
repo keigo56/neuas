@@ -24,7 +24,10 @@ class User extends Authenticatable
         'email',
         'password',
         'avatar',
-        'department_id'
+        'student_number',
+        'department_id',
+        'year_graduated',
+        'course',
     ];
 
     /**

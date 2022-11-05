@@ -24,6 +24,11 @@ return new class extends Migration
             $table->foreignId('department_id')->nullable();
             $table->foreign('department_id')->references('id')->on('departments');
 
+
+            $table->string('student_number')->nullable();
+            $table->string('year_graduated')->nullable();
+            $table->string('course')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
         });

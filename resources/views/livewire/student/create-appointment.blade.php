@@ -63,13 +63,20 @@
                                 <x-forms.input wire:model="student_name" name="student_name" type="text" id="student_name" placeholder="John Doe"/>
                             </div>
 
-                            <div>
+                            <div wire:key="steps">
                                 <label  for="student_department" class="block text-sm font-medium text-gray-700 mb-2">Department</label>
-                                <x-forms.select-menu wire:model="student_department" id="student_department">
-                                    @foreach($departments as $department)
-                                        <option value="{{ $department->id }}">{{ $department->display_name }}</option>
-                                    @endforeach
-                                </x-forms.select-menu>
+                                <x-forms.select-menu-custom name="student_department" wire:model="student_department" id="student_department">
+                                    <x-slot name="options">
+                                        @foreach($this->departments as $department)
+                                            <option value="{{ $department['id'] }}">{{ $department['display_name'] }}</option>
+                                        @endforeach
+                                    </x-slot>
+                                    <x-slot name="customhtml">
+                                        @foreach($this->departments as $department)
+                                            <div value="{{ $department['id'] }}">{{ $department['display_name'] }}</div>
+                                        @endforeach
+                                    </x-slot>
+                                </x-forms.select-menu-custom>
                             </div>
 
                             <div>
@@ -81,9 +88,47 @@
                                             <span>{{ $document->name }}</span>
                                         </label>
                                     </div>
-
                                 @endforeach
                             </div>
+                            @if(in_array(3, $student_document))
+                                <div wire:key="staddress">
+                                    <div class="mb-2">
+                                        <label  for="student_address_type" class="block text-sm font-medium text-gray-700 mb-2">Address Type</label>
+                                        <x-forms.select-menu wire:model="student_address_type" id="student_address_type">
+                                            <option value="local">Local</option>
+                                            <option value="international">International</option>
+                                        </x-forms.select-menu>
+                                    </div>
+
+                                    <div>
+                                        <label for="student_address" class="block text-sm font-medium text-gray-700 mb-2">Address</label>
+                                        <x-forms.input wire:model="student_address" name="student_address" type="text" id="student_address" placeholder="Your address..."/>
+                                    </div>
+                                </div>
+                            @endif
+                           <div>
+                               <label for="pof" class="block text-sm font-medium text-gray-700 mb-2">Proof of Payment (optional)</label>
+                               <div class="flex mb-3 space-x-2 flex-wrap" >
+
+                                   @foreach($this->student_proof_of_payments as $image)
+                                       <div class="h-24 w-24 overflow-hidden bg-white rounded-md border border-gray-400 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                                           <img class="w-full h-full object-cover " src="{{ $image->temporaryUrl() }}" alt="">
+                                       </div>
+                                   @endforeach
+
+                               </div>
+                               <div class="flex justify-center items-center w-full">
+                                   <label for="pof" class="flex flex-col justify-center items-center w-full h-64 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                       <div class="flex flex-col justify-center items-center pt-5 pb-6">
+                                           <svg aria-hidden="true" class="mb-3 w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                           <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                                           <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                                       </div>
+                                       <input id="pof" wire:model="student_proof_of_payments" type="file" class="hidden" accept="image/png, image/gif, image/jpeg" multiple>
+                                   </label>
+                               </div>
+                           </div>
+
                             <div>
                                 <label for="other_documents" class="block text-sm font-medium text-gray-700 mb-2">Additional Documents (optional)</label>
                                 <textarea class="block w-full shadow-sm sm:text-sm rounded-md focus:ring-brand focus:border-brand border-gray-300" wire:model.lazy="student_other_documents" name="other_documents" type="text" id="other_documents"></textarea>
@@ -97,10 +142,12 @@
                             <h1 class="text-gray-900 font-semibold text-xl ">Date and Time</h1>
                         </div>
                         <div class="flex flex-col space-y-8">
-
+                            <div class="p-4 mb-2 text-sm text-yellow-700 bg-yellow-100 rounded-lg dark:bg-yellow-200 dark:text-yellow-800" role="alert">
+                               Minimum appointment date must be 10 working days from today's date. This is to give time to process your appointment request.
+                            </div>
                             <div>
                                 <label for="appointment_date" class="block text-sm font-medium text-gray-700 mb-2">Date</label>
-                                <x-forms.input wire:model="appointment_date" name="appointment_date" type="date" id="appointment_date" min="{{ now()->addDay()->format('Y-m-d') }}" />
+                                <x-forms.input wire:model="appointment_date" name="appointment_date" type="date" id="appointment_date" min="{{ $this->getWorkingDaysMinimum()->format('Y-m-d') }}" />
                             </div>
 
                             <div>
@@ -176,6 +223,31 @@
                                 <dt class="text-sm font-medium text-gray-500">Date</dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ \Carbon\Carbon::parse($this->appointment_date)->format('M d, Y') }} <span class="text-gray-400 text-xs">({{ \Carbon\Carbon::parse($this->appointment_date)->dayName }})</span></dd>
                             </div>
+                            @if(in_array(3, $student_document))
+                            <div class="bg-gray-50 px-2 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                                <dt class="text-sm font-medium text-gray-500">Address Type</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $this->student_address_type }}</dd>
+                            </div>
+                            <div class="bg-gray-50 px-2 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                                <dt class="text-sm font-medium text-gray-500">Address</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $this->student_address }}</dd>
+                            </div>
+                            @endif
+
+                            @if(count($this->student_proof_of_payments) > 0)
+                                <div class="bg-gray-50 px-2 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                                    <dt class="text-sm font-medium text-gray-500">Proof of payment</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                        <div class="flex mb-3 space-x-2 flex-wrap" >
+                                            @foreach($this->student_proof_of_payments as $image)
+                                                <div class="h-24 w-24 overflow-hidden bg-white rounded-md border border-gray-400 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                                                    <img class="w-full h-full object-cover " src="{{ $image->temporaryUrl() }}" alt="">
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </dd>
+                                </div>
+                            @endif
                             <div class="bg-gray-50 px-2 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
                                 <dt class="text-sm font-medium text-gray-500">Time</dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $this->appointment_time_display }}</dd>

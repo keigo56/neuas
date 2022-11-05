@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Student;
 
 use App\Mail\AppointmentStatusMail;
 use App\Models\Appointment;
+use App\Models\AppointmentDocument;
+use App\Models\AppointmentProofOfPayment;
 use App\Models\Department;
 use App\Models\Document;
 use App\Models\TimeSchedule;
@@ -11,16 +13,25 @@ use App\Models\WeekSchedule;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class CreateAppointment extends Component
 {
 
+    use WithFileUploads;
+
     public bool $done = false;
+
+    public array $departments = [];
 
     public string $student_name = '';
     public string $student_department = '';
     public array $student_document = [];
     public string $student_other_documents = '';
+    public string $student_address_type = 'local';
+    public string $student_address = '';
+
+    public $student_proof_of_payments = [];
 
     public string $appointment_date = '';
     public string $appointment_time_id = 'no_sched';
@@ -49,7 +60,7 @@ class CreateAppointment extends Component
     public function mount()
     {
         $this->student_name = auth()->user()->name;
-        $this->appointment_date = now()->format('Y-m-d');
+        $this->appointment_date = $this->getWorkingDaysMinimum()->format('Y-m-d');
         $this->student_department = Department::first()->id;
     }
 
@@ -81,6 +92,7 @@ class CreateAppointment extends Component
     public function render()
     {
         $departments = Department::all();
+        $this->departments = Department::all()->toArray();
 
         $week_schedule = WeekSchedule::query()
             ->where('day', str(Carbon::parse($this->appointment_date)->dayName)->lower())
@@ -89,7 +101,7 @@ class CreateAppointment extends Component
 
         $available_time_schedules = [];
 
-        $valid_date = Carbon::parse($this->appointment_date)->greaterThan(now());
+        $valid_date = Carbon::parse($this->appointment_date)->greaterThanOrEqualTo($this->getWorkingDaysMinimum()->subDay());
 
         if($week_schedule->available === 1 && $valid_date){
             $available_time_schedules = TimeSchedule::query()
@@ -142,6 +154,7 @@ class CreateAppointment extends Component
             $this->validate([
                 'student_name' => 'required|min:6',
                 'student_document' => 'required|exists:documents,id',
+//                'student_address' => 'required',
             ]);
         }else if($this->current_step === 2) {
             $this->validate(['appointment_time_id' => function ($attribute, $value, $fail) {
@@ -175,9 +188,20 @@ class CreateAppointment extends Component
             'time_to' =>  $time_schedule->time_to,
             'user_id' => auth()->user()->id,
             'other_documents' => $this->student_other_documents,
+            'address_type' => $this->student_address_type,
+            'address' => $this->student_address
         ]);
 
         $appointment->documents()->sync($this->student_document);
+
+        foreach ($this->student_proof_of_payments as $photo) {
+            $image_path = $photo->storePublicly('proof_of_payment','public');
+            AppointmentProofOfPayment::query()
+                ->create([
+                    'appointment_id' => $appointment->id,
+                    'image_path' => $image_path,
+                ]);
+        }
 
         $this->done = true;
         $this->dispatchBrowserEvent('close-confirm-appointment-modal');
@@ -187,5 +211,22 @@ class CreateAppointment extends Component
     {
         $department_name = \App\Models\Department::query()->where('id', $this->student_department)->first()->name ?? 'N/A';
         return str($department_name)->replace('_', ' ')->title()->toString();
+    }
+
+    public function getWorkingDaysMinimum()
+    {
+        $day_allowance = 10;
+        $allowed_date = now();
+        $added_days = 0;
+
+        while(true){
+            $allowed_date = $allowed_date->addDay();
+            if($allowed_date->isWeekday()){
+                $added_days++;
+            }
+            if($added_days === $day_allowance) break;
+        }
+
+        return $allowed_date;
     }
 }

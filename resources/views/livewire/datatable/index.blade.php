@@ -460,6 +460,7 @@
                                                          class="{{ $this->getItemAction($index)->getClass() ?? 'text-gray-700' }} hover:bg-gray-100 flex items-center justify-between px-4 py-2"
                                                          role="menuitem"
                                                          tabindex="-1"
+                                                         x-on:click="open = false"
                                                          id="menu-item-0">
                                                         {{ $this->getItemAction($index)->getText() }}
                                                         @if($this->getItemAction($index)->getIcon() !== null)

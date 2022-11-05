@@ -61,6 +61,11 @@
                         Hi {{ $student_name }},
                         @if($status === 'cancelled')
                             your appointment has been cancelled.
+                        @elseif($status === 'on_process')
+                            your appointment status has been set to "On Process". <br>
+                            To be able to process your appointment, please provide proof of payment by uploading image / screenshot of the receipt on the app. <br> <br>
+                            Please visit the link below for payment instructions: <br><br>
+                            https://payment.neu.edu.ph/index.php/m-main?fbclid=IwAR3_AWnU3az_2O48mqCPcbao95EvRYj6-pbts-t-TZaOs7yZpg9u0MWCTXY
                         @else
                             your appointment has been set to {{ $status }}.
                         @endif
@@ -218,6 +223,12 @@
                                             style="border-radius: 9999px; padding: 0.125rem 0.5rem; background-color: #FECDD3; color: #E11D48"
                                             class='ml-1 text-xs text-rose-600 truncate px-2 py-0.5 rounded-full bg-rose-200'>
                                         {{ $status }}
+                                        </span>
+                                    @elseif($status === 'on_process')
+                                        <span
+                                            style="border-radius: 9999px; padding: 0.125rem 0.5rem; background-color: #fef08a; color: #ca8a04"
+                                            class='ml-1 text-xs text-rose-600 truncate px-2 py-0.5 rounded-full bg-rose-200'>
+                                        On Process
                                         </span>
                                     @else
                                         <span

@@ -5,4 +5,5 @@
         <livewire:registrar.appointments.appointments-datatable :department="$department->id"/>
     </div>
     <livewire:registrar.appointments.update-status/>
+    <livewire:registrar.appointments.view-appointment/>
 </x-layouts.registrar>

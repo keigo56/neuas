@@ -31,6 +31,9 @@ return new class extends Migration
             $table->string('notes')->nullable();
             $table->string('other_documents')->nullable();
 
+            $table->string('address_type')->default('local');
+            $table->text('address')->nullable();
+
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users');
 

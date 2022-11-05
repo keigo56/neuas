@@ -6,6 +6,7 @@
                 <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Status</label>
                 <x-forms.select-menu wire:model="appointment_status" name="status">
                     <option value="active">Active</option>
+                    <option value="on_process">On Process</option>
                     <option value="cancelled">Cancelled</option>
                     <option value="finished">Finished</option>
                 </x-forms.select-menu>

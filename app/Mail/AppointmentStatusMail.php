@@ -9,7 +9,7 @@ use Illuminate\Queue\SerializesModels;
 
 class AppointmentStatusMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use SerializesModels;
 
     private array $data = [];
 

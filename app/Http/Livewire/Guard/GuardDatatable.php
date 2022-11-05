@@ -31,8 +31,7 @@ class GuardDatatable extends Datatable
             )
             ->join('users', 'users.id', '=', 'appointments.user_id')
 //            ->join('documents', 'documents.id', '=', 'appointments.document_id')
-            ->join('departments', 'departments.id', '=', 'appointments.department_id')
-            ->where('appointments.appointment_date', now()->toDateString());
+            ->join('departments', 'departments.id', '=', 'appointments.department_id');
     }
 
     public function columns(): array
