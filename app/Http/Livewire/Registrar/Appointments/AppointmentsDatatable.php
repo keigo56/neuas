@@ -27,6 +27,9 @@ class AppointmentsDatatable extends Datatable
                 'appointments.id',
                 'users.avatar',
                 'users.email',
+                'users.student_number',
+                'users.year_graduated',
+                'users.course',
                 'appointments.student_name',
                 'appointments.appointment_date',
                 'appointments.status',
@@ -54,6 +57,24 @@ class AppointmentsDatatable extends Datatable
             Column::make()
                 ->field('student_name')
                 ->title('Student Name')
+                ->sortable(true)
+                ->string(),
+
+            Column::make()
+                ->field('student_number')
+                ->title('Student Number')
+                ->sortable(true)
+                ->string(),
+
+            Column::make()
+                ->field('year_graduated')
+                ->title('Year Graduated')
+                ->sortable(true)
+                ->string(),
+
+            Column::make()
+                ->field('course')
+                ->title('Course')
                 ->sortable(true)
                 ->string(),
 
@@ -112,6 +133,11 @@ class AppointmentsDatatable extends Datatable
 
         if($column->getField() === 'avatar' && $value !== '') {
             return "<img class='h-8 w-8 rounded-full' src='$value' alt=''>";
+        }
+
+        if($column->getField() === 'avatar' && $value === '') {
+            $data = $this->currentRow->student_name;
+            return "<img class='h-8 w-8 rounded-full' src='https://ui-avatars.com/api/?background=EBF4FF&color=7F9CF5&name=$data' alt='$data'>";
         }
 
         if($column->getField() === 'document_name') {

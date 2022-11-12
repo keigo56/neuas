@@ -402,6 +402,9 @@
                 </thead>
                 <tbody>
                 @foreach($rows as $index => $row)
+                    @php
+                        $this->currentRow = $row;
+                    @endphp
                     <tr wire:key="row-{{ $index }}"
                         class="@if(in_array($this->getRowKey($row), $this->selectedIDS)) bg-blue-50 @endif hover:bg-gray-100">
                         @if($this->withBulkActions)

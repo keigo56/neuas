@@ -37,6 +37,7 @@ abstract class Datatable extends Component
     public string $search = '';
     public string $primaryKey = 'id';
     public string $primaryTable = 'users';
+    protected $currentRow;
 
 
     abstract function setup(): void;

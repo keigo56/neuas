@@ -74,7 +74,7 @@
                                             <x-forms.label for="remember" class="mb-0 block text-xs font-medium text-gray-700">Remember Information</x-forms.label>
                                         </div>
                                         <div>
-                                            <a href="{{ route('password.request') }}" class="text-brand text-xs font-semibold hover:text-brand-dark hover:underline ">Forgot Password?</a>
+{{--                                            <a href="{{ route('password.request') }}" class="text-brand text-xs font-semibold hover:text-brand-dark hover:underline ">Forgot Password?</a>--}}
                                         </div>
                                     </div>
                                 </div>

@@ -116,6 +116,9 @@ class GuardDatatable extends Datatable
             if($value === 'pending'){
                 $value = ucfirst($value);
                 return "<span class='ml-1 text-xs text-yellow-600 truncate px-2 py-0.5 rounded-full bg-yellow-200'>$value</span>";
+            }else if($value === 'on_process'){
+                $value = ucfirst($value);
+                return "<span class='ml-1 text-xs text-yellow-600 truncate px-2 py-0.5 rounded-full bg-yellow-200'>On Process</span>";
             }else if($value === 'cancelled'){
                 $value = ucfirst($value);
                 return "<span class='ml-1 text-xs text-rose-600 truncate px-2 py-0.5 rounded-full bg-rose-200'>$value</span>";
